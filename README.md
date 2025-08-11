@@ -26,3 +26,9 @@
     ]
 }
 ```
+
+todo: actually describe content lol
+
+## Test this project
+
+Just run `make test`
