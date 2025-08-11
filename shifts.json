@@ -1,0 +1,181 @@
+{
+    "eventName": "Clubhausfest WiSe 2025",
+    "eventDesc": "Clubhausfest der Fachschaften Informatik, Kognitionswisschenschaft und Psychologie",
+    "eventDate": "23.10.2025",
+    "eventTasks": [
+        {
+            "taskName": "Aufbau",
+            "taskDesc": "Surprise, was sollt ihr wohl tun?",
+            "taskShifts": [
+                {
+                    "shiftName": "18:00 - 21:00",
+                    "shiftSlots": 10
+                },
+                {
+                    "shiftName": "18:00 - 21:00",
+                    "shiftDesc": "mit Auto",
+                    "shiftSlots": 3
+                }
+            ]
+        },
+        {
+            "taskName": "Main-Bar",
+            "taskDesc": "Verkauf von Getränken an der Mainfloor Bar.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 4
+                }
+            ]
+        },
+        {
+            "taskName": "Techno-Bar",
+            "taskDesc": "Verkauf von Getränken an der Technofloor Bar.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 4
+                }
+            ]
+        },
+        {
+            "taskName": "Nachschub Bars",
+            "taskDesc": "Ihr sorgt dafür, dass die Bars ausreichend Getränke haben und keine Engpässe entstehen.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 4
+                }
+            ]
+        },
+        {
+            "taskName": "Becher spülen",
+            "taskDesc": "Die an den Bars verwendeten Mehrwegbecher müssen für die Wiederbenutzung gespült und wieder zurückgebracht werden.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 4
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 4
+                }
+            ]
+        },
+        {
+            "taskName": "Ordner:innen",
+            "taskDesc": "Man sorgt in Zweierteams dafür, dass sich niemand reinschleicht oder am Kühlwagen bedient. Außerdem seid ihr die erste Anlaufstelle für Beschwerden und sorgt für Ordnung auf dem Fest.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 8
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 8
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 8
+                }
+            ]
+        },
+        {
+            "taskName": "Awareness-Team",
+            "taskDesc": "Ihr kümmert euch in Situationen, in denen es zu grenzüberschreitendem Verhalten gekommen ist, um die betroffenen Personen: emotionale erste Hilfe.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftSlots": 2
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftSlots": 2
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftSlots": 2
+                }
+            ]
+        },
+        {
+            "taskName": "Einlass &amp; Auslass",
+            "taskDesc": "Man zählt über eine gemeinsame App die Anzahl der Besucher. Dabei darf eine Besucherzahl von 520 Menschen nicht überschritten werden.",
+            "taskShifts": [
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftDesc": "Einlass",
+                    "shiftSlots": 3
+                },
+                {
+                    "shiftName": "21:00 - 23:00",
+                    "shiftDesc": "Auslass",
+                    "shiftSlots": 3
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftDesc": "Einlass",
+                    "shiftSlots": 3
+                },
+                {
+                    "shiftName": "23:00 - 01:00",
+                    "shiftDesc": "Auslass",
+                    "shiftSlots": 3
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftDesc": "Einlass",
+                    "shiftSlots": 3
+                },
+                {
+                    "shiftName": "01:00 - 03:00",
+                    "shiftDesc": "Auslass",
+                    "shiftSlots": 3
+                }
+            ]
+        },
+        {
+            "taskName": "Abbau",
+            "taskDesc": "Bis zum bitteren Ende.",
+            "taskShifts": [
+                {
+                    "shiftName": "03:00 - Ende",
+                    "shiftSlots": 10
+                },
+                {
+                    "shiftName": "03:00 - Ende",
+                    "shiftDesc": "mit Auto",
+                    "shiftSlots": 3
+                }
+            ]
+        }
+    ]
+}

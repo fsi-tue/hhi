@@ -1,0 +1,68 @@
+
+body {
+    margin: 0px;
+    padding: 10px;
+}
+
+header {
+    margin: -10px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background: #efefef;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.table td, .table th {
+    padding: 4px !important;
+}
+
+h2, h3, h4, h5, h6 {
+    margin-bottom: 0px;
+}
+
+.accordion-shift {
+    margin-bottom: 5px;
+    background-color: #efefef;
+    border-radius: 3px;
+}
+
+.accordion-slot {
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border-radius: 3px;
+}
+
+.accordion-body {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.event-info {
+    margin-bottom: 25px;
+}
+
+.shift-desc {
+    margin-bottom: 5px;
+}
+
+.fsi-logo {
+    font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
+    font-weight: bold;
+    font-style: oblique;
+    font-size: 200%;
+    color: #000080;
+}
+
+.hhi-logo {
+    font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
+    line-height: 85%;
+    font-size: 66%;
+    font-weight: bold;
+    font-style: oblique;
+    color: #000080;
+}
+
+.hhi-logo-first {
+    color: #ff0000;
+}

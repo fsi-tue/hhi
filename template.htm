@@ -2,12 +2,165 @@
 <html>
     <head>
         <title>
-            FSI Teufelsystem
+            FSI HHI
         </title>
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-icons/siimple-icons.css" />
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+
+        <script type="text/javascript">
+            function showRegistrationDialog(task, shift, slot) {
+                document.getElementById("registration-task").innerHTML = task;
+                document.getElementById("registration-shift").innerHTML = shift;
+                document.getElementById("registration-slot").innerHTML = slot;
+                document.getElementById("modal-registration").classList.add("active");
+            }
+
+            function hideRegistrationDialog() {
+                document.getElementById("modal-registration").classList.remove("active");
+            }
+        </script>
     </head>
     <body>
-        <h1>
-            Teufelsystem
-        </h1>
+        <header class="navbar">
+            <section class="navbar-section">
+                <span class="hhi-logo">
+                    <span class="hhi-logo-first">H</span>elfilisten<br/>
+                    <span class="hhi-logo-first">H</span>osting<br/>
+                    <span class="hhi-logo-first">I</span>nterface
+                </span>
+            </section>
+            <section class="navbar-section">
+                <span class="fsi-logo">fsi</span>
+            </section>
+        </header>
+        
+        <div class="text-center event-info">
+            <h1>
+                <?=$eventInfo["eventName"]?>
+            </h1>
+            <div class="columns col-gapless">
+                <div class="column col-4 col-md-3 text-right">
+                    <i style="font-size: 200%" class="si-calendar"></i>
+                </div>
+                <div class="column col-4 col-md-8 text-center">
+                    <?=$eventInfo["eventDate"]?>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="columns col-gapless">
+                <div class="column col-4 col-md-3 text-right">
+                    <i style="font-size: 200%" class="si-info-circle"></i>
+                </div>
+                <div class="column col-4 col-md-8 text-center">
+                    <?=$eventInfo["eventDesc"]?>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <?php foreach($eventInfo["eventTasks"] as $task) { ?>
+            <div class="accordion accordion-shift">
+                <input type="checkbox" id="accordion-<?=md5($task["taskName"])?>" name="accordion-checkbox" hidden>
+                <label class="accordion-header" for="accordion-<?=md5($task["taskName"])?>">
+                    <h3 class="c-hand"><i class="icon icon-arrow-right mr-1"></i> <i class="icon icon-location"></i> <?=$task["taskName"]?></h3>
+                </label>
+                <div class="accordion-body">
+                    <div class="text-italic shift-desc">
+                        <?=$task["taskDesc"]?>
+                    </div>
+                    <?php foreach($task["taskShifts"] as $shift) { ?>
+                        <div class="accordion accordion-slot">
+                            <input type="checkbox" id="accordion-<?=md5($task["taskName"] . $shift["shiftName"]) . (isset($shift["shiftDesc"]) ? $shift["shiftDesc"] : "")?>" name="accordion-checkbox" hidden>
+                            <label class="accordion-header c-hand" for="accordion-<?=md5($task["taskName"] . $shift["shiftName"]) . (isset($shift["shiftDesc"]) ? $shift["shiftDesc"] : "")?>">
+                                <h5 class="c-hand">
+                                    <i class="icon icon-arrow-right mr-1"></i>
+                                    <i class="icon icon-time mr-1"></i>
+                                    <?=$shift["shiftName"]?> 
+                                    <?=isset($shift["shiftDesc"]) ? "<small class='chip bg-primary'>".$shift["shiftDesc"]."</small>" : ""?>
+                                </h5>
+                            </label>
+                            <div class="accordion-body">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Nr.</th>
+                                            <th>Name</th>
+                                            <th>Aktion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php for($i = 0; $i < $shift["shiftSlots"]; $i++) { ?>
+                                        <tr>
+                                            <td><?=$i+1?></td>
+                                            <td><i>leer</i></td>
+                                            <td><a 
+                                                href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>', <?=$i+1?>)" 
+                                                class="btn">Hier eintragen</a></td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <?php } ?>
+        </section>
+        <div class="modal" id="modal-registration">
+            <a href="javascript:hideRegistrationDialog()" class="modal-overlay" aria-label="Close"></a>
+            <div class="modal-container">
+                <div class="modal-header">
+                <a href="javascript:hideRegistrationDialog()" class="btn btn-clear float-right" aria-label="Close"></a>
+                <div class="modal-title h5">In Schicht eintragen</div>
+                </div>
+                <div class="modal-body">
+                    <div class="content">
+                        <div class="text-center">
+                            <b>Vielen Dank für deine Hilfe!</b> <i class="si-heart"></i>
+                        </div>
+                        <div class="text-center">
+                            <b>Aufgabe:</b> <span id="registration-task"></span><br/>
+                            <b>Schicht:</b> <span id="registration-shift"></span><br/>
+                            <b>Slot:</b> <span id="registration-slot"></span>
+                        </div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-3 col-sm-12">
+                                    <label class="form-label" for="input-example-1">Dein Name:</label>
+                                </div>
+                                <div class="col-9 col-sm-12">
+                                    <input class="form-input" type="text" id="input-example-1" placeholder="fachschaft.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-3 col-sm-12">
+                                    <label class="form-label" for="input-example-1">Dein ZX-Kürzel:</label>
+                                </div>
+                                <div class="col-9 col-sm-12">
+                                    <input class="form-input" type="text" id="input-example-1" placeholder="zxabc12">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="columns">
+                        <div class="col-6 text-center">
+                            <a href="javascript:hideRegistrationDialog()" class="btn btn-primary">Abbrechen</a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <a href="." method="POST" class="btn btn-primary">Eintragen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

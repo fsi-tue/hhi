@@ -1,4 +1,4 @@
 # makefiles ftw!
 
 test:
-	php -S localhost:8080 index.php
+	php -S 0.0.0.0:8080
