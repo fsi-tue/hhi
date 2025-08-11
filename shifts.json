@@ -12,8 +12,7 @@
                     "shiftSlots": 10
                 },
                 {
-                    "shiftName": "18:00 - 21:00",
-                    "shiftDesc": "mit Auto",
+                    "shiftName": "18:00 - 21:00 mit Auto",
                     "shiftSlots": 3
                 }
             ]
@@ -131,33 +130,27 @@
             "taskDesc": "Man zählt über eine gemeinsame App die Anzahl der Besucher. Dabei darf eine Besucherzahl von 520 Menschen nicht überschritten werden.",
             "taskShifts": [
                 {
-                    "shiftName": "21:00 - 23:00",
-                    "shiftDesc": "Einlass",
+                    "shiftName": "21:00 - 23:00 Einlass",
                     "shiftSlots": 3
                 },
                 {
-                    "shiftName": "21:00 - 23:00",
-                    "shiftDesc": "Auslass",
+                    "shiftName": "21:00 - 23:00 Auslass",
                     "shiftSlots": 3
                 },
                 {
-                    "shiftName": "23:00 - 01:00",
-                    "shiftDesc": "Einlass",
+                    "shiftName": "23:00 - 01:00 Einlass",
                     "shiftSlots": 3
                 },
                 {
-                    "shiftName": "23:00 - 01:00",
-                    "shiftDesc": "Auslass",
+                    "shiftName": "23:00 - 01:00 Auslass",
                     "shiftSlots": 3
                 },
                 {
-                    "shiftName": "01:00 - 03:00",
-                    "shiftDesc": "Einlass",
+                    "shiftName": "01:00 - 03:00 Einlass",
                     "shiftSlots": 3
                 },
                 {
-                    "shiftName": "01:00 - 03:00",
-                    "shiftDesc": "Auslass",
+                    "shiftName": "01:00 - 03:00 Auslass",
                     "shiftSlots": 3
                 }
             ]
@@ -171,8 +164,7 @@
                     "shiftSlots": 10
                 },
                 {
-                    "shiftName": "03:00 - Ende",
-                    "shiftDesc": "mit Auto",
+                    "shiftName": "03:00 - Ende mit Auto",
                     "shiftSlots": 3
                 }
             ]

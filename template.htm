@@ -13,10 +13,11 @@
         <meta charset="utf-8" />
 
         <script type="text/javascript">
-            function showRegistrationDialog(task, shift, slot) {
+            function showRegistrationDialog(task, shift) {
                 document.getElementById("registration-task").innerHTML = task;
+                document.getElementById("input-task").value = task;
                 document.getElementById("registration-shift").innerHTML = shift;
-                document.getElementById("registration-slot").innerHTML = slot;
+                document.getElementById("input-shift").value = shift;
                 document.getElementById("modal-registration").classList.add("active");
             }
 
@@ -105,9 +106,9 @@
                                     <?php for($i = 0; $i < $shift["shiftSlots"]; $i++) { ?>
                                         <tr>
                                             <td><?=$i+1?></td>
-                                            <td><i>leer</i></td>
+                                            <td><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : "<i>leer</i>"?></td>
                                             <td><a 
-                                                href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>', <?=$i+1?>)" 
+                                                href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>')" 
                                                 class="btn">Hier eintragen</a></td>
                                         </tr>
                                     <?php } ?>
@@ -136,10 +137,11 @@
                         <div class="text-center">
                             <b>Aufgabe:</b> <span id="registration-task"></span><br/>
                             <b>Schicht:</b> <span id="registration-shift"></span><br/>
-                            <b>Slot:</b> <span id="registration-slot"></span>
                         </div>
                         <form method="POST" id="form-register" class="form-horizontal">
                             <input type="hidden" name="action" value="register" />
+                            <input type="hidden" id="input-task" name="data-task" value="" />
+                            <input type="hidden" id="input-shift" name="data-shift" value="" />
                             <div class="form-group">
                                 <div class="col-3 col-sm-12">
                                     <label class="form-label" for="input-name">Dein Name:</label>
