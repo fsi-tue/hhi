@@ -42,6 +42,10 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 25px;
 }
 
+.toast-info {
+    margin-bottom: 25px;
+}
+
 .shift-desc {
     margin-bottom: 5px;
 }

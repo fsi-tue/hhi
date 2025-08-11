@@ -62,6 +62,14 @@
             </div>
         </div>
 
+        <div class="text-center toast-info">
+        <?php if(isset($toast)) { ?>
+            <div class="toast toast-<?=$toast["style"]?>">
+                <?=$toast["message"]?>
+            </div>
+        <?php } ?>
+        </div>
+
         <section>
             <?php foreach($eventInfo["eventTasks"] as $task) { ?>
             <div class="accordion accordion-shift">
@@ -130,21 +138,22 @@
                             <b>Schicht:</b> <span id="registration-shift"></span><br/>
                             <b>Slot:</b> <span id="registration-slot"></span>
                         </div>
-                        <form class="form-horizontal">
+                        <form method="POST" id="form-register" class="form-horizontal">
+                            <input type="hidden" name="action" value="register" />
                             <div class="form-group">
                                 <div class="col-3 col-sm-12">
-                                    <label class="form-label" for="input-example-1">Dein Name:</label>
+                                    <label class="form-label" for="input-name">Dein Name:</label>
                                 </div>
                                 <div class="col-9 col-sm-12">
-                                    <input class="form-input" type="text" id="input-example-1" placeholder="fachschaft.name">
+                                    <input class="form-input" type="text" id="input-name" name="data-name" placeholder="fachschaft.name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-3 col-sm-12">
-                                    <label class="form-label" for="input-example-1">Dein ZX-Kürzel:</label>
+                                    <label class="form-label" for="input-zxnick">Dein ZX-Kürzel:</label>
                                 </div>
                                 <div class="col-9 col-sm-12">
-                                    <input class="form-input" type="text" id="input-example-1" placeholder="zxabc12">
+                                    <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="zxabc12">
                                 </div>
                             </div>
                         </form>
@@ -156,7 +165,7 @@
                             <a href="javascript:hideRegistrationDialog()" class="btn btn-primary">Abbrechen</a>
                         </div>
                         <div class="col-6 text-center">
-                            <a href="." method="POST" class="btn btn-primary">Eintragen</a>
+                            <a href="javascript:document.getElementById('form-register').submit()" class="btn btn-primary">Eintragen</a>
                         </div>
                     </div>
                 </div>
