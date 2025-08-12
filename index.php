@@ -1,18 +1,18 @@
 <?php
 /* config values */
-$SHIFT_FILE = "./shifts.json";
+$config = json_decode(file_get_contents("./config.json"), true);
 
 /* main event data */
-$eventInfo = json_decode(file_get_contents($SHIFT_FILE), true);
+$eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);
 
 /* action processing */
 if(isset($_POST["action"]) && $_POST["action"] == "register") {
     /* re-read data with exclusive lock for persistence */
-    $fp = fopen($SHIFT_FILE, "r+");
+    $fp = fopen($config["shiftFile"], "r+");
     if( ! flock($fp, LOCK_EX) ) {
         die("ERROR: Cannot obtain file lock.");
     }
-    $rawData = fread($fp, filesize($SHIFT_FILE));
+    $rawData = fread($fp, filesize($config["shiftFile"]));
     $eventInfo = json_decode($rawData, true);
 
     /* store user data */

@@ -1,0 +1,10 @@
+{
+    "mail": {
+        "username": "zxXXXXX",
+        "password": "",
+        "imapserv": "mailserv.uni-tuebingen.de",
+        "fromaddress": "hhi@fsi.uni-tuebingen.de",
+        "fromname": "FSI HHI"
+    },
+    "shiftFile": "./shifts.json"
+}

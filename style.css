@@ -77,3 +77,8 @@ h2, h3, h4, h5, h6 {
 .hhi-logo-first {
     color: #ff0000;
 }
+
+.popover-zxnick {
+    left: 120% !important;
+    font-size: 70%;
+}
