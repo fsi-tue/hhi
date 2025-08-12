@@ -12,6 +12,34 @@ $config = json_decode(file_get_contents("./config.json"), true);
 $eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);
 
 /* action processing */
+if(isset($_GET["action"]) && $_GET["action"] == "unregister") {
+    /* TODO: implement file lock as in action::register */
+    $hash = $_GET["hash"];
+    $taskId = -1;
+    $shiftId = -1;
+    $entryId = -1;
+    foreach($eventInfo["eventTasks"] as $taskIndex => $task) {
+        foreach($task["taskShifts"] as $shiftIndex => $shift) {
+            if( ! isset($shift["entries"])) continue;
+            foreach($shift["entries"] as $entryIndex => $entry) {
+                if($entry["entryHash"] === $hash) {
+                    $taskId  = $taskIndex;
+                    $shiftId = $shiftIndex;
+                    $entryId = $entryIndex;
+                }
+            }
+        }
+    }
+    array_splice($eventInfo["eventTasks"][$taskId]["taskShifts"][$shiftId]["entries"], $entryId, 1);
+    file_put_contents($config["shiftFile"], json_encode($eventInfo, JSON_PRETTY_PRINT));
+    /* user message */
+    $toast = array(
+        "message" => "Du hast Dich erfolgreich aus Deiner Schicht abgemeldet.",
+        "style" => "success"      
+    );    
+}
+
+/* action processing */
 if(isset($_POST["action"]) && $_POST["action"] == "register") {
     /* re-read data with exclusive lock for persistence */
     $fp = fopen($config["shiftFile"], "r+");
@@ -23,8 +51,9 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
 
     /* store user data */
     $entry = array(
-        "entryName" => $_POST["data-name"],
-        "entryZxNick" => $_POST["data-zxnick"]
+        "entryName" => htmlspecialchars($_POST["data-name"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+        "entryZxNick" => htmlspecialchars($_POST["data-zxnick"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+        "entryHash" => hash("sha256", $config["hashSalt"] . $_POST["data-name"] . $_POST["data-zxnick"])
     );
     $taskName = $_POST["data-task"];
     $shiftName = $_POST["data-shift"];
@@ -34,6 +63,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
     $taskIndex = array_search($taskName, array_map(fn($t) => html_entity_decode($t['taskName']), $tasks), true);
     $shifts = $tasks[$taskIndex]['taskShifts'];
     $shiftIndex = array_search($shiftName, array_map(fn($s) => html_entity_decode($s['shiftName']), $shifts), true);
+    /* TODO: prevent invalid shifts */
 
     /* error prevention */
     if( ! isset($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"])) {
@@ -62,7 +92,12 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
             /* content */
             $mail->isHTML(false);
             $mail->Subject = "Helfiliste " . $eventInfo["eventName"];
-            $mail->Body = sprintf("Hallo %s!\n\nVielen Dank für Deine Hilfe.\n\nFachschaft Informatik", $entry["entryName"]);
+            $mail->Body = "Hallo {$entry["entryName"]}!\n\nVielen Dank für Deine Hilfe. Du hast Dich für folgende Schicht eingetragen:\n
+{$taskName} - {$shiftName}\n\n
+Falls Du Dich abmelden möchtest, benutze folgenden Link: \n
+{$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}
+\n\n
+Fachschaft Informatik";
             $mail->send();
         } catch (Exception $e) {
             die("ERROR: Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
