@@ -29,24 +29,38 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
     $shifts = $tasks[$taskIndex]['taskShifts'];
     $shiftIndex = array_search($shiftName, array_map(fn($s) => html_entity_decode($s['shiftName']), $shifts), true);
 
-    /* TODO: check if shift is full */
-
-    /* write user data back to json */
-    $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"][] = $entry;
-
-    /* write back to json file (with exclusive lock since read above) */
-    ftruncate($fp, 0);
-    rewind($fp);
-    fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
-    fflush($fp);
-    flock($fp, LOCK_UN);
-    fclose($fp);
-
-    /* output message for user */
-    $toast = array(
-        "message" => "Deine Registrierung wurde gespeichert. Falls Du Dich austragen möchtest, kannst Du das über den Link in der Bestätigungsmail tun.",
-        "style" => "success"      
-    );
+    /* error prevention */
+    if( ! isset($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"])) {
+        $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"] = [];
+    }
+    
+    /* check if there is space left in this shift */
+    if(count($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"]) 
+        < $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["shiftSlots"]) {
+        /* write user data back to json */
+        $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"][] = $entry;
+        /* write back to json file (with exclusive lock since read above) */
+        ftruncate($fp, 0);
+        rewind($fp);
+        fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
+        fflush($fp);
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        /* output message for user */
+        $toast = array(
+            "message" => "Deine Registrierung wurde gespeichert. Falls Du Dich austragen möchtest, kannst Du das über den Link in der Bestätigungsmail tun.",
+            "style" => "success"      
+        );    
+    } else {
+        /* no space left in this shift */
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        /* output message for user */
+        $toast = array(
+            "message" => "Diese Schicht ist leider schon voll!",
+            "style" => "error"      
+        );   
+    } 
 }
 
 /* call template */
