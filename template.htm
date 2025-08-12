@@ -99,7 +99,6 @@
                                         <tr>
                                             <th>Nr.</th>
                                             <th>Name</th>
-                                            <th>Aktion</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,13 +106,12 @@
                                         <tr>
                                             <td><?=$i+1?></td>
                                             <td><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : "<i>leer</i>"?></td>
-                                            <td><a 
-                                                href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>')" 
-                                                class="btn">Hier eintragen</a></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
                                 </table>
+                                <a href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>')" 
+                                    class="btn btn-primary btn-register">Hier eintragen</a>
                             </div>
                         </div>
                     <?php } ?>
