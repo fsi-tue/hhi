@@ -1,4 +1,10 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+require 'lib/PHPMailer/src/Exception.php';
+require 'lib/PHPMailer/src/PHPMailer.php';
+require 'lib/PHPMailer/src/SMTP.php';
+
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
 
@@ -37,6 +43,30 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
     /* check if there is space left in this shift */
     if(count($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"]) 
         < $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["shiftSlots"]) {
+        /* generate feedback mail */
+        $mail = new PHPMailer(true);
+        try {
+            /* smtp connection settings */
+            $mail->isSMTP();
+            $mail->Host = $config["mail"]["smtpserv"];
+            $mail->SMTPAuth = true; 
+            $mail->Username = $config["mail"]["username"];
+            $mail->Password = $config["mail"]["password"];
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            /* smtp mail settings */
+            $mail->setFrom($config["mail"]["fromaddress"], $config["mail"]["fromname"]);
+            $mail->addAddress($entry["entryZxNick"] . "@student.uni-tuebingen.de", $entry["entryName"]);
+            $mail->addReplyTo('fsi@fsi.uni-tuebingen.de', 'FSI');
+            $mail->CharSet = "UTF-8";
+            /* content */
+            $mail->isHTML(false);
+            $mail->Subject = "Helfiliste " . $eventInfo["eventName"];
+            $mail->Body = sprintf("Hallo %s!\n\nVielen Dank für Deine Hilfe.\n\nFachschaft Informatik", $entry["entryName"]);
+            $mail->send();
+        } catch (Exception $e) {
+            die("ERROR: Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+        }
         /* write user data back to json */
         $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"][] = $entry;
         /* write back to json file (with exclusive lock since read above) */
