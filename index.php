@@ -1,9 +1,20 @@
 <?php
+/* config values */
+$SHIFT_FILE = "./shifts.json";
+
 /* main event data */
-$eventInfo = json_decode(file_get_contents("./shifts.json"), true);
+$eventInfo = json_decode(file_get_contents($SHIFT_FILE), true);
 
 /* action processing */
 if(isset($_POST["action"]) && $_POST["action"] == "register") {
+    /* re-read data with exclusive lock for persistence */
+    $fp = fopen($SHIFT_FILE, "r+");
+    if( ! flock($fp, LOCK_EX) ) {
+        die("ERROR: Cannot obtain file lock.");
+    }
+    $rawData = fread($fp, filesize($SHIFT_FILE));
+    $eventInfo = json_decode($rawData, true);
+
     /* store user data */
     $entry = array(
         "entryName" => $_POST["data-name"],
@@ -23,7 +34,13 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
     /* write user data back to json */
     $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"][] = $entry;
 
-    /* TODO: persistent write to file (please use flock) */
+    /* write back to json file (with exclusive lock since read above) */
+    ftruncate($fp, 0);
+    rewind($fp);
+    fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
+    fflush($fp);
+    flock($fp, LOCK_UN);
+    fclose($fp);
 
     /* output message for user */
     $toast = array(
