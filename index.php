@@ -33,7 +33,7 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
     if( ! isset($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"])) {
         $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"] = [];
     }
-    
+
     /* check if there is space left in this shift */
     if(count($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"]) 
         < $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["shiftSlots"]) {
@@ -44,8 +44,6 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
         rewind($fp);
         fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
         fflush($fp);
-        flock($fp, LOCK_UN);
-        fclose($fp);
         /* output message for user */
         $toast = array(
             "message" => "Deine Registrierung wurde gespeichert. Falls Du Dich austragen möchtest, kannst Du das über den Link in der Bestätigungsmail tun.",
@@ -53,14 +51,14 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
         );    
     } else {
         /* no space left in this shift */
-        flock($fp, LOCK_UN);
-        fclose($fp);
         /* output message for user */
         $toast = array(
             "message" => "Diese Schicht ist leider schon voll!",
             "style" => "error"      
         );   
     } 
+    flock($fp, LOCK_UN);
+    fclose($fp);
 }
 
 /* call template */
