@@ -19,10 +19,18 @@ $action = $_GET['action'] ?? $_POST['action'] ?? null;
 $eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);
 switch ($action) {
     case "register":
-        $toast = handleRegister($_POST, $config, $eventInfo);
+        if($config["enableRegister"]) {
+            $toast = handleRegister($_POST, $config, $eventInfo);
+        } else {
+            $toast = array("style" => "warning", "message" => "Die Registrierung für diese Veranstaltung wurde deaktiviert.");
+        }
         break;
     case "unregister":
-        $toast = handleUnregister($_GET['hash'] ?? '', $config, $eventInfo);
+        if($config["enableUnregister"]) {
+            $toast = handleUnregister($_GET['hash'] ?? '', $config, $eventInfo);
+        } else {
+            $toast = array("style" => "warning", "message" => "Die Abmeldung für diese Veranstaltung wurde deaktiviert.");
+        }
         break;
 }
 

@@ -26,7 +26,15 @@ function handleRegister(array $postData, array $config, array &$eventInfo): arra
     $taskIndex = array_search($taskName, array_map(fn($t) => html_entity_decode($t['taskName']), $tasks), true);
     $shifts = $tasks[$taskIndex]['taskShifts'];
     $shiftIndex = array_search($shiftName, array_map(fn($s) => html_entity_decode($s['shiftName']), $shifts), true);
-    /* TODO: prevent invalid shifts */
+    /* prevent invalid shifts */
+    if($taskIndex === FALSE || $shiftIndex === FALSE) {
+        flock($fp, LOCK_UN);
+        fclose($fp);
+        return array(
+            "style" => "error",
+            "message" => "Fehler bei Registrierung: Unbekannte Aufgabe/Schicht."
+        );
+    }
 
     /* error prevention */
     if( ! isset($eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"])) {

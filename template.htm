@@ -117,7 +117,8 @@
                                     <?php } ?>
                                     </tbody>
                                 </table>
-                                <?php if( !isset($shift["entries"]) || count($shift["entries"]) < $shift["shiftSlots"]) { ?>  
+                                <?php if( $config["enableRegister"] 
+                                    && (!isset($shift["entries"]) || count($shift["entries"]) < $shift["shiftSlots"])) { ?>  
                                 <a href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>')" 
                                     class="btn btn-primary btn-register">Hier eintragen</a>
                                 <?php } ?>
@@ -175,8 +176,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="col-9 col-sm-12">
                                     <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="zxabc12">
                                 </div>
