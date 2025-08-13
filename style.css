@@ -85,6 +85,7 @@ h2, h3, h4, h5, h6 {
 
 .chip-occupancy {
     font-size: 50%;
+    float: right;
 }
 
 .footer {
@@ -93,7 +94,7 @@ h2, h3, h4, h5, h6 {
 }
 
 .footer-left {
-
+    /* noop */
 }
 
 .footer-right {
