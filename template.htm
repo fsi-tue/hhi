@@ -77,7 +77,12 @@
             <div class="accordion accordion-shift">
                 <input type="checkbox" id="accordion-<?=md5($task["taskName"])?>" name="accordion-checkbox" hidden>
                 <label class="accordion-header" for="accordion-<?=md5($task["taskName"])?>">
-                    <h3 class="c-hand"><i class="icon icon-arrow-right mr-1"></i> <i class="icon icon-location"></i> <?=$task["taskName"]?></h3>
+                    <h3 class="c-hand">
+                        <i class="icon icon-arrow-right mr-1"></i> 
+                        <i class="icon icon-location"></i> 
+                        <?=$task["taskName"]?>
+                        <span class="chip chip-occupancy" style="background: <?=$task["occupancyColor"]?>"><?=$task["occupancyString"]?></span>
+                    </h3>
                 </label>
                 <div class="accordion-body">
                     <div class="text-italic shift-desc">
@@ -92,6 +97,7 @@
                                     <i class="icon icon-time mr-1"></i>
                                     <?=$shift["shiftName"]?> 
                                     <?=isset($shift["shiftDesc"]) ? "<small class='chip bg-primary'>".$shift["shiftDesc"]."</small>" : ""?>
+                                    <span class="chip chip-occupancy" style="background: <?=$shift["occupancyColor"]?>"><?=$shift["occupancyString"]?></span>
                                 </h5>
                             </label>
                             <div class="accordion-body">
@@ -190,5 +196,14 @@
                 </div>
             </div>
         </div>
+        <footer class="navbar footer">
+            <section class="navbar-section footer-left">
+                <a href="https://github.com/fsi-tue/hhi">Source Code on GitHub</a>
+            </section>
+            <section class="navbar-section footer-right">
+                &copy; 2025
+                <?=$authors?>
+            </section>
+        </footer>
     </body>
 </html>

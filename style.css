@@ -82,3 +82,21 @@ h2, h3, h4, h5, h6 {
     left: 120% !important;
     font-size: 70%;
 }
+
+.chip-occupancy {
+    font-size: 50%;
+}
+
+.footer {
+    font-size: 60%;
+    margin-top: 50px;
+}
+
+.footer-left {
+
+}
+
+.footer-right {
+    text-align: right;
+    color: #666666;
+}

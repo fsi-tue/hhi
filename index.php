@@ -4,6 +4,7 @@ use PHPMailer\PHPMailer\Exception;
 require 'lib/PHPMailer/src/Exception.php';
 require 'lib/PHPMailer/src/PHPMailer.php';
 require 'lib/PHPMailer/src/SMTP.php';
+require 'src/utils.php';
 
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
@@ -148,6 +149,12 @@ Fachschaft Informatik";
     flock($fp, LOCK_UN);
     fclose($fp);
 }
+
+/* dynamically calculate occupancy */
+calculcateOccupancy($eventInfo);
+
+/* read authors */
+$authors = implode(", ", explode("\n", file_get_contents("./AUTHORS")));
 
 /* call template */
 include("template.htm");
