@@ -15,7 +15,8 @@ function handleRegister(array $postData, array $config, array &$eventInfo): arra
     $entry = array(
         "entryName" => htmlspecialchars($_POST["data-name"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
         "entryZxNick" => htmlspecialchars($_POST["data-zxnick"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
-        "entryHash" => hash("sha256", $config["hashSalt"] . $_POST["data-name"] . $_POST["data-zxnick"])
+        "entryTimestamp" => time(),
+        "entryHash" => hash("sha256", $config["hashSalt"] . time() . $_POST["data-name"] . $_POST["data-zxnick"])
     );
     $taskName = $_POST["data-task"];
     $shiftName = $_POST["data-shift"];
@@ -55,11 +56,13 @@ function handleRegister(array $postData, array $config, array &$eventInfo): arra
             $mail->isHTML(false);
             $mail->Subject = "Helfiliste " . $eventInfo["eventName"];
             $mail->Body = "Hallo {$entry["entryName"]}!\n\nVielen Dank für Deine Hilfe. Du hast Dich für folgende Schicht eingetragen:\n
-{$eventInfo["eventName"]}
-{$taskName} : {$shiftName}\n\n
-Falls Du Dich abmelden möchtest, benutze folgenden Link: \n
+Veranstaltung: {$eventInfo["eventName"]}
+Datum: {$eventInfo["eventDate"]}
+Schicht: {$taskName} ({$shiftName})\n
+Falls Du Dich abmelden möchtest, benutze bitte folgenden Link: \n
 {$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}
 \n\n
+Mit freundlichen Grüßen
 Fachschaft Informatik";
             $mail->send();
         } catch (Exception $e) {
