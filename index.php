@@ -13,7 +13,14 @@ $eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);
 
 /* action processing */
 if(isset($_GET["action"]) && $_GET["action"] == "unregister") {
-    /* TODO: implement file lock as in action::register */
+    /* re-read data with exclusive lock for persistence */
+    $fp = fopen($config["shiftFile"], "r+");
+    if( ! flock($fp, LOCK_EX) ) {
+        die("ERROR: Cannot obtain file lock.");
+    }
+    $rawData = fread($fp, filesize($config["shiftFile"]));
+    $eventInfo = json_decode($rawData, true);
+    /* search for hash */
     $hash = $_GET["hash"];
     $taskId = -1;
     $shiftId = -1;
@@ -30,13 +37,28 @@ if(isset($_GET["action"]) && $_GET["action"] == "unregister") {
             }
         }
     }
-    array_splice($eventInfo["eventTasks"][$taskId]["taskShifts"][$shiftId]["entries"], $entryId, 1);
-    file_put_contents($config["shiftFile"], json_encode($eventInfo, JSON_PRETTY_PRINT));
-    /* user message */
-    $toast = array(
-        "message" => "Du hast Dich erfolgreich aus Deiner Schicht abgemeldet.",
-        "style" => "success"      
-    );    
+    if($entryId != -1) {
+        /* shift found */
+        array_splice($eventInfo["eventTasks"][$taskId]["taskShifts"][$shiftId]["entries"], $entryId, 1);
+        /* write back to json file (with exclusive lock since read above) */
+        ftruncate($fp, 0);
+        rewind($fp);
+        fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
+        fflush($fp);
+        /* user message */
+        $toast = array(
+            "message" => "Du hast Dich erfolgreich aus Deiner Schicht abgemeldet.",
+            "style" => "success"      
+        );    
+    } else {
+        /* shift NOT found */
+        $toast = array(
+            "message" => "Diese Schicht ist nicht bekannt.",
+            "style" => "error"      
+        );    
+    }
+    flock($fp, LOCK_UN);
+    fclose($fp);
 }
 
 /* action processing */
@@ -86,14 +108,15 @@ if(isset($_POST["action"]) && $_POST["action"] == "register") {
             $mail->Port = 587;
             /* smtp mail settings */
             $mail->setFrom($config["mail"]["fromaddress"], $config["mail"]["fromname"]);
-            $mail->addAddress($entry["entryZxNick"] . "@student.uni-tuebingen.de", $entry["entryName"]);
+            $mail->addAddress(str_contains($entry["entryZxNick"], "@") ? $entry["entryZxNick"] : ($entry["entryZxNick"] . "@student.uni-tuebingen.de"), $entry["entryName"]);
             $mail->addReplyTo('fsi@fsi.uni-tuebingen.de', 'FSI');
             $mail->CharSet = "UTF-8";
             /* content */
             $mail->isHTML(false);
             $mail->Subject = "Helfiliste " . $eventInfo["eventName"];
             $mail->Body = "Hallo {$entry["entryName"]}!\n\nVielen Dank für Deine Hilfe. Du hast Dich für folgende Schicht eingetragen:\n
-{$taskName} - {$shiftName}\n\n
+{$eventInfo["eventName"]}
+{$taskName} : {$shiftName}\n\n
 Falls Du Dich abmelden möchtest, benutze folgenden Link: \n
 {$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}
 \n\n
