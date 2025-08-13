@@ -23,14 +23,14 @@ function calculcateOccupancy(&$eventInfo) {
 }
 
 function getOccupancyColorFromPercentage($p) {
-    if ($p < 0.5) { // rot → gelb
+    if ($p < 0.5) {
         $g = 255 * ($p / 0.5);
         $r = 255;
-    } else {       // gelb → grün
+    } else {
         $g = 255;
         $r = 255 * (1 - ($p - 0.5) / 0.5);
     }
-    return sprintf("#%02x%02x00", $r, $g);
+    return sprintf("#%02x%02x00bb", $r, $g);
 }
 
 function getOccupancyStringFromPercentage($p) {
