@@ -1,10 +1,14 @@
 {
     "mail": {
-        "username": "zxXXXXX",
-        "password": "",
-        "imapserv": "mailserv.uni-tuebingen.de",
+        "username": "zx...",
+        "password": "supersecret",
+        "smtpserv": "smtpserv.uni-tuebingen.de",
         "fromaddress": "hhi@fsi.uni-tuebingen.de",
         "fromname": "FSI HHI"
     },
-    "shiftFile": "./shifts.json"
+    "shiftFile": "./shifts.json",
+    "baseUrl": "http://localhost:8080/index.php",
+    "hashSalt": "muchmoresecret",
+    "enableRegister": true,
+    "enableUnregister": true
 }
