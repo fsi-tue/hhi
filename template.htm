@@ -13,6 +13,15 @@
         <meta charset="utf-8" />
 
         <script type="text/javascript">
+            function shareDialog() {
+                const shareData = {
+                    title: "HHI",
+                    text: "Hey!\nUnterstütze uns bei <?=$eventInfo["eventName"]?> und übernimm eine Schicht.\n",
+                    url: "<?=$config["baseUrl"]?>"
+                };
+                navigator.share(shareData);
+            }
+
             function showRegistrationDialog(task, shift) {
                 document.getElementById("registration-task").innerHTML = task;
                 document.getElementById("input-task").value = task;
@@ -37,6 +46,9 @@
                 </span>
             </section>
             <section class="navbar-section">
+                <a href="javascript:shareDialog();" class="share-icon">
+                    <i class="si-share"></i>
+                </a>
                 <a href="?action=export" class="print-icon">
                     <i class="si-printer"></i>
                 </a>

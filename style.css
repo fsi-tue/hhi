@@ -56,6 +56,10 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 5px;
 }
 
+.share-icon {
+    color: #808080;
+    font-size: 200%;
+}
 .print-icon {
     color: #808080;
     font-size: 200%;
