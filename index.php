@@ -7,6 +7,7 @@ require 'lib/PHPMailer/src/SMTP.php';
 require 'src/utils.php';
 require 'src/register.php';
 require 'src/unregister.php';
+require 'src/export.php';
 
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
@@ -31,6 +32,11 @@ switch ($action) {
         } else {
             $toast = array("style" => "warning", "message" => "Die Abmeldung für diese Veranstaltung wurde deaktiviert.");
         }
+        break;
+    case "export":
+        handleExport($config, $eventInfo);
+        /* what to do? */
+        exit(0);
         break;
 }
 
