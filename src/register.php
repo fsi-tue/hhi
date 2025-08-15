@@ -68,7 +68,8 @@ Veranstaltung: {$eventInfo["eventName"]}
 Datum: {$eventInfo["eventDate"]}
 Schicht: {$taskName} ({$shiftName})\n
 Falls Du Dich abmelden möchtest, benutze bitte folgenden Link: \n
-{$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}
+{$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}\n
+Du erhältst ein paar Tage vor der Veranstaltung eine weitere Mail mit genaueren Informationen zu Deiner Schicht.
 \n\n
 Mit freundlichen Grüßen
 Fachschaft Informatik";
