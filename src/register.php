@@ -78,7 +78,9 @@ Fachschaft Informatik";
             flock($fp, LOCK_UN);
             fclose($fp);
             return array(
-                "message" => "Fehler: Bestätigungsmail konnte nicht versendet werden.<br/>" . $mail->ErrorInfo,
+                "message" => "Fehler: Bestätigungsmail konnte nicht versendet werden.<br/><br/>" 
+                    . $mail->ErrorInfo
+                    . "<br/><br/>Eintrag im Dienstplan wurde <b>nicht</b> erstellt.",
                 "style" => "error"
             );
         }
