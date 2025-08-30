@@ -72,7 +72,7 @@ Falls Du Dich abmelden möchtest, benutze bitte folgenden Link: \n
 Du erhältst ein paar Tage vor der Veranstaltung eine weitere Mail mit genaueren Informationen zu Deiner Schicht.
 \n\n
 Mit freundlichen Grüßen
-Fachschaft Informatik";
+{$eventInfo["eventOrganizer"]}";
             $mail->send();
         } catch (Exception $e) {
             flock($fp, LOCK_UN);

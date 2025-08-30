@@ -2,6 +2,7 @@
     "eventName": "Clubhausfest WiSe 2025",
     "eventDesc": "Clubhausfest der Fachschaften Informatik, Kognitionswisschenschaft und Psychologie",
     "eventDate": "23.10.2025",
+    "eventOrganizer": "FSI, FSK, Psy",
     "eventTasks": [
         {
             "taskName": "Aufbau",
