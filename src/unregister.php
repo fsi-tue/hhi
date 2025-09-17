@@ -1,5 +1,5 @@
 <?php
-function handleUnregister(string $hash, array $config, array &$eventInfo): array {
+function handleUnregister(string $hash, array $config, array &$eventInfo): int {
     /* re-read data with exclusive lock for persistence */
     $fp = fopen($config["shiftFile"], "r+");
     if( ! flock($fp, LOCK_EX) ) {
@@ -8,7 +8,6 @@ function handleUnregister(string $hash, array $config, array &$eventInfo): array
     $rawData = fread($fp, filesize($config["shiftFile"]));
     $eventInfo = json_decode($rawData, true);
     /* search for hash */
-    $hash = $_GET["hash"];
     $taskId = -1;
     $shiftId = -1;
     $entryId = -1;
@@ -33,19 +32,28 @@ function handleUnregister(string $hash, array $config, array &$eventInfo): array
         fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
         fflush($fp);
         /* user message */
-        $toast = array(
-            "message" => "Du hast Dich erfolgreich aus Deiner Schicht abgemeldet.",
-            "style" => "success"      
-        );
+        $msg = MSG_UNREGISTER_SUCCESS;
     } else {
         /* shift NOT found */
-        $toast = array(
-            "message" => "Fehler: Unbekannter Fingerprint.",
-            "style" => "error"      
-        );    
+        $msg = MSG_UNREGISTER_UNKNOWN;
     }
     flock($fp, LOCK_UN);
     fclose($fp);
 
-    return $toast;
+    return $msg;
+}
+
+function isHashExisting(string $hash, array $config, array &$eventInfo): bool {
+    $entryId = -1;
+    foreach($eventInfo["eventTasks"] as $taskIndex => $task) {
+        foreach($task["taskShifts"] as $shiftIndex => $shift) {
+            if( ! isset($shift["entries"])) continue;
+            foreach($shift["entries"] as $entryIndex => $entry) {
+                if($entry["entryHash"] === $hash) {
+                    $entryId = $entryIndex;
+                }
+            }
+        }
+    }
+    return $entryId !== -1;
 }

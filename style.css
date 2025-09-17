@@ -121,3 +121,12 @@ h2, h3, h4, h5, h6 {
 .accordion > input:checked + .accordion-header .icon-arrow-right {
   transform: rotate(90deg);
 }
+
+.toast .btn {
+    color: #5755d9;
+    text-decoration: none;
+}
+
+.toast p {
+    margin-top: 10px;
+}

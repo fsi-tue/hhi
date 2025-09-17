@@ -30,10 +30,7 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
     if($taskIndex === FALSE || $shiftIndex === FALSE) {
         flock($fp, LOCK_UN);
         fclose($fp);
-        return array(
-            "style" => "error",
-            "message" => "Fehler bei Registrierung: Unbekannte Aufgabe/Schicht."
-        );
+        return MSG_REGISTER_UNKNOWN;
     }
 
     /* error prevention */
@@ -68,7 +65,7 @@ Veranstaltung: {$eventInfo["eventName"]}
 Datum: {$eventInfo["eventDate"]}
 Schicht: {$taskName} ({$shiftName})\n
 Falls Du Dich abmelden möchtest, benutze bitte folgenden Link: \n
-{$config["baseUrl"]}?action=unregister&hash={$entry["entryHash"]}\n
+{$config["baseUrl"]}?action=unregisterDialog&hash={$entry["entryHash"]}\n
 Du erhältst ein paar Tage vor der Veranstaltung eine weitere Mail mit genaueren Informationen zu Deiner Schicht.
 \n\n
 Mit freundlichen Grüßen
