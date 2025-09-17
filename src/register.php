@@ -2,7 +2,7 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function handleRegister(array $postData, array $config, array &$eventInfo): array {
+function handleRegister(array $postData, array $config, array &$eventInfo): int {
     /* re-read data with exclusive lock for persistence */
     $fp = fopen($config["shiftFile"], "r+");
     if( ! flock($fp, LOCK_EX) ) {
@@ -77,12 +77,7 @@ Mit freundlichen Grüßen
         } catch (Exception $e) {
             flock($fp, LOCK_UN);
             fclose($fp);
-            return array(
-                "message" => "Fehler: Bestätigungsmail konnte nicht versendet werden.<br/><br/>" 
-                    . $mail->ErrorInfo
-                    . "<br/><br/>Eintrag im Dienstplan wurde <b>nicht</b> erstellt.",
-                "style" => "error"
-            );
+            return MSG_REGISTER_FAILURE;
         }
         /* write user data back to json */
         $eventInfo["eventTasks"][$taskIndex]["taskShifts"][$shiftIndex]["entries"][] = $entry;
@@ -92,18 +87,12 @@ Mit freundlichen Grüßen
         fwrite($fp, json_encode($eventInfo, JSON_PRETTY_PRINT));
         fflush($fp);
         /* output message for user */
-        $toast = array(
-            "message" => "Deine Registrierung wurde gespeichert. Falls Du Dich austragen möchtest, kannst Du das über den Link in der Bestätigungsmail tun.",
-            "style" => "success"      
-        );    
+        $msg = MSG_REGISTER_SUCCESS;
     } else {
         /* no space left in this shift */
-        $toast = array(
-            "message" => "Diese Schicht ist leider schon voll!",
-            "style" => "error"      
-        );   
+        $msg = MSG_REGISTER_NOSPACE;
     } 
     flock($fp, LOCK_UN);
     fclose($fp);
-    return $toast;
+    return $msg;
 }
