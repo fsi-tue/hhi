@@ -110,3 +110,14 @@ h2, h3, h4, h5, h6 {
     text-align: right;
     color: #666666;
 }
+
+/* animated accordion arrows */
+
+.accordion .accordion-header .icon-arrow-right {
+  display: inline-block;           /* nötig für transform */
+  transition: transform .2s ease;  /* smooth rotation */
+}
+
+.accordion > input:checked + .accordion-header .icon-arrow-right {
+  transform: rotate(90deg);
+}
