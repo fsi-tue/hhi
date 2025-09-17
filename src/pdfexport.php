@@ -37,7 +37,7 @@ class PDF extends tFPDF {
     }
 }
 
-function handleExport($config, &$eventInfo) {
+function handlePdfExport($config, &$eventInfo) {
     $pdf = new PDF($eventInfo, 'L', 'mm', 'A4');
 
     foreach ($eventInfo["eventTasks"] as $task) {
