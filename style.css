@@ -147,3 +147,16 @@ h2, h3, h4, h5, h6 {
     color: #000080;
 */
 }
+
+.fs-info-dino::before {
+  content: "";
+  display: inline-block;
+  width: 1.5em; 
+  height: 1.5em;
+  margin-right: 0.4em;
+  background-image: url("static/dino.svg");
+  background-repeat: no-repeat;
+  background-size: contain; 
+  background-position: center;
+  vertical-align: middle; 
+}

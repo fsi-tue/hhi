@@ -97,6 +97,9 @@ switch ($action) {
 /* dynamically calculate occupancy */
 calculcateOccupancy($eventInfo);
 
+/* add special css classes */
+appendClasses($eventInfo);
+
 /* read authors from file */
 $authors = implode(", ", explode("\n", file_get_contents("./AUTHORS")));
 

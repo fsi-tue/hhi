@@ -37,4 +37,19 @@ function getOccupancyStringFromPercentage($p) {
     return sprintf("%d%%", $p * 100);
 }
 
+function appendClasses(&$eventInfo) {
+    foreach($eventInfo["eventTasks"] as $taskIndex => &$task) {
+        foreach($task["taskShifts"] as $shiftIndex => &$shift) {
+            if(isset($shift["entries"])) {
+                foreach($shift["entries"] as $entryIndex => &$entry) {
+                    $entry["entryClass"] = "";
+                    /* check for fsi */
+                    if(str_starts_with($entry["entryName"], "fsi")) $entry["entryClass"] .= "fs-info ";
+                    if(str_contains($entry["entryName"], "dino")) $entry["entryClass"] .= "fs-info-dino ";
+                }
+            } 
+        }
+    }
+}
+
 ?>
