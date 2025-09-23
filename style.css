@@ -83,6 +83,15 @@ h2, h3, h4, h5, h6 {
     color: #000080;
 }
 
+.hhi-logo:hover {
+    text-decoration: none;
+    color: #000080;
+}
+
+.hhi-logo:visited {
+    color: #000080;
+}
+
 .hhi-logo-first {
     color: #ff0000;
 }
