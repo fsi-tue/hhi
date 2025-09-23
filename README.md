@@ -16,6 +16,13 @@ cp sample-shifts.json shifts.json
 > [!CAUTION]
 > Please make sure no one can access these config files via HTTP (=> .htaccess)!
 
+Sample `.htaccess` file:
+```
+RedirectMatch 404 /\.git
+RedirectMatch 404 /*\.json
+```
+
+
 ### Details: `config.json`
 | Key               | Description                                                                 | Required  |
 |-------------------|-----------------------------------------------------------------------------|-----------|
