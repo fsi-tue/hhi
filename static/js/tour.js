@@ -7,7 +7,11 @@ const tour = window.driver.js.driver({
     smoothScroll: true,
     disableActiveInteraction: true,
     steps: [
-        { popover: { title: 'Hey!', description: 'Willkommen beim HHI (Helfilisten Hosting Interface)! Hier kannst du sehen, welche Aufgaben es gibt und dich direkt für Schichten eintragen.<br/><br/>Komm, ich gebe dir eine kleine Führung! <i class="si-emoji-smile"></i>' } },
+        { popover: { title: 'Hey!', description: 'Willkommen beim HHI (Helfilisten Hosting Interface)! Hier kannst du sehen, welche Aufgaben es gibt und dich direkt für Schichten eintragen.<br/><br/>Komm, ich gebe dir eine kleine Führung! <i class="si-emoji-smile"></i>' },
+            onHighlightStarted: () => {
+                document.querySelectorAll(".accordion-task input[type=checkbox]").forEach((e) => (e.checked = false));
+            }
+        },
         { element: '.accordion-task', popover: { title: 'Die Aufgaben', description: 'Hier findest du die Übersicht aller Aufgabenbereiche, z. B. Aufbau, Bars, Nachschub oder Awareness-Team. Jede Aufgabe lässt sich aufklappen, um die Schichten zu sehen.' } },
         { element: '.accordion-task .chip-occupancy', popover: { title: 'Belegungs-Status', description: 'Dieses Feld zeigt, wie stark die jeweilige Aufgabe schon besetzt ist. So siehst du sofort, wo noch Unterstützung gebraucht wird.' } },
         { element: '.accordion-shift', popover: { title: 'Eine Schicht', description: 'Innerhalb einer Aufgabe sind die Schichten nach Uhrzeiten aufgeteilt. Hier siehst du, zu welchen Zeiten noch Helfer:innen gebraucht werden.' },
