@@ -140,3 +140,10 @@ h2, h3, h4, h5, h6 {
 .toast p {
     margin-top: 10px;
 }
+
+.fs-info {
+/*
+    font-style: oblique;
+    color: #000080;
+*/
+}

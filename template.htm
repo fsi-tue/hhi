@@ -127,7 +127,7 @@
                                     <?php for($i = 0; $i < $shift["shiftSlots"]; $i++) { ?>
                                         <tr>
                                             <td><?=$i+1?></td>
-                                            <td><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : "<i>leer</i>"?></td>
+                                            <td class="<?=str_starts_with($shift["entries"][$i]["entryName"]??"", "fsi")?'fs-info':''?>"><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : "<i>leer</i>"?></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
