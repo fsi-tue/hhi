@@ -56,22 +56,17 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 5px;
 }
 
-.share-icon {
+.header-icon, .header-icon:visited {
     color: #808080;
     font-size: 200%;
 }
-.print-icon {
-    color: #808080;
-    font-size: 200%;
-    margin-right: 20px;
-}
-
 .fsi-logo {
     font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
     font-weight: bold;
     font-style: oblique;
     font-size: 200%;
     color: #000080;
+    margin-left: 20px;
 }
 
 .hhi-logo {
