@@ -57,7 +57,7 @@ switch ($action) {
         $hash = $_GET["hash"];
         $unregisterLink = "{$config["baseUrl"]}?action=unregister&hash={$hash}";
         if(isHashExisting($_GET['hash'] ?? '', $config, $eventInfo)) {
-            $toast = array("style" => "primary", "message" => "<h3>Abmeldung</h3><p>Möchtest Du dich wirklich aus Deiner Schicht abmelden?</p><p><a class='btn' href='{$unregisterLink}'>Ja, Abmelden!</a></p>");
+            $toast = array("style" => "primary", "message" => "<h3>Abmeldung</h3><p>Möchtest Du dich wirklich aus Deiner Schicht abmelden?</p><p><a class='btn' href='{$unregisterLink}'>Ja, melde mich ab!</a><a class='btn' href='{$config['baseUrl']}'>Nein, bleibe dabei!</a></p>");
         }
         break;
     case "unregister":
