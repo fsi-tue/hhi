@@ -13,10 +13,14 @@ cp sample-config.json config.json
 cp sample-shifts.json shifts.json
 ```
 
+> [!CAUTION]
+> Please make sure no one can access these config files via HTTP (=> .htaccess)!
+
 ### Details: `config.json`
 | Key               | Description                                                                 | Required  |
 |-------------------|-----------------------------------------------------------------------------|-----------|
 | `shiftFile`       | Path to JSON with shift definitions (see next chapter)                      | yes       |
+| `adminMail`       | Mail address of the administrator who will receive the csv export           | yes       |
 | `baseUrl`         | The base URL of the service, usually ending with `index.php`                | yes       |
 | `hashSalt`        | Salt for the registration hashs                                             | yes       |
 | `enableRegister`  | Enable or disable registration function                                     | yes       |
@@ -41,6 +45,10 @@ For an example, have a look at `sample-shifts.json`.
 
 ## Test this project
 Just run `make test` (because Makefiles are superior). This will host a local webserver which listens on `0.0.0.0:8080` for testing purposes.
+
+## Data access
+If you want to get a list of all entries with contact information, just call `<baseUrl>?action=csvexport`.
+The system will send a mail with all entries as a csv file to the configured admin mail address.
 
 ## Contribution
 If you want to contribute: Feel free! 

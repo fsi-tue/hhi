@@ -11,10 +11,14 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
     $rawData = fread($fp, filesize($config["shiftFile"]));
     $eventInfo = json_decode($rawData, true);
 
+    /* distinguish between pure zxnick and full mail address */
+    $possibleZxNick = htmlspecialchars($_POST["data-zxnick"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $entryMail = str_contains($possibleZxNick, "@") ? $possibleZxNick : ($possibleZxNick . "@student.uni-tuebingen.de");
+
     /* store user data */
     $entry = array(
         "entryName" => htmlspecialchars($_POST["data-name"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
-        "entryZxNick" => htmlspecialchars($_POST["data-zxnick"], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'),
+        "entryMail" => $entryMail,
         "entryTimestamp" => time(),
         "entryHash" => hash("sha256", $config["hashSalt"] . time() . $_POST["data-name"] . $_POST["data-zxnick"])
     );
@@ -54,7 +58,7 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
             $mail->Port = 587;
             /* smtp mail settings */
             $mail->setFrom($config["mail"]["fromaddress"], $config["mail"]["fromname"]);
-            $mail->addAddress(str_contains($entry["entryZxNick"], "@") ? $entry["entryZxNick"] : ($entry["entryZxNick"] . "@student.uni-tuebingen.de"), $entry["entryName"]);
+            $mail->addAddress($entry["entryMail"], $entry["entryName"]);
             $mail->addReplyTo('fsi@fsi.uni-tuebingen.de', 'FSI');
             $mail->CharSet = "UTF-8";
             /* content */

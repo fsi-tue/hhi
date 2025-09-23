@@ -9,6 +9,7 @@ require 'src/utils.php';
 require 'src/register.php';
 require 'src/unregister.php';
 require 'src/pdfexport.php';
+require 'src/csvexport.php';
 
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
@@ -85,11 +86,12 @@ switch ($action) {
             }
         }
         break;
-    case "export":
+    case "pdfexport":
         handlePdfExport($config, $eventInfo);
-        /* what to do? */
         exit(0);
-        break;
+    case "csvexport":
+        handleCsvExport($config, $eventInfo);
+        exit(0);
 }
 
 /* dynamically calculate occupancy */
