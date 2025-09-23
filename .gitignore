@@ -2,3 +2,4 @@ config.json
 shifts.json
 .DS_Store
 .mtx.php
+**/*.mtx.php
