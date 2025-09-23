@@ -101,7 +101,14 @@ calculcateOccupancy($eventInfo);
 appendClasses($eventInfo);
 
 /* read authors from file */
-$authors = implode(", ", explode("\n", file_get_contents("./AUTHORS")));
+//$authors = implode(", ", explode("\n", file_get_contents("./AUTHORS")));
+$authors = implode(
+    ", ",
+    array_map(
+        fn($c) => "<span class='contributor'>" . $c . "</span>",
+        explode("\n", file_get_contents("./AUTHORS"))
+    )
+);
 
 /* call template */
 include("template.htm");
