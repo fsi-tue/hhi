@@ -8,10 +8,13 @@
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-icons/siimple-icons.css" />
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="static/css/style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css" />
+        <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
+        <script src="static/js/tour.js" defer></script>
+        <link rel="stylesheet" href="static/css/tour.css" />
         <script type="text/javascript">
             function shareDialog() {
                 const shareData = {
@@ -46,10 +49,13 @@
                 </a>
             </section>
             <section class="navbar-section">
-                <a href="javascript:shareDialog();" class="share-icon">
+                <a href="javascript:tour.drive();" class="header-icon">
+                    <i class="si-question-circle"></i>
+                </a>
+                <a href="javascript:shareDialog();" class="header-icon">
                     <i class="si-share"></i>
                 </a>
-                <a href="?action=pdfexport" class="print-icon">
+                <a href="?action=pdfexport" class="header-icon">
                     <i class="si-printer"></i>
                 </a>
                 <span class="fsi-logo">fsi</span>
@@ -89,7 +95,7 @@
 
         <section>
             <?php foreach($eventInfo["eventTasks"] as $task) { ?>
-            <div class="accordion accordion-shift">
+            <div class="accordion accordion-task">
                 <input type="checkbox" id="accordion-<?=md5($task["taskName"])?>" name="accordion-checkbox" hidden>
                 <label class="accordion-header" for="accordion-<?=md5($task["taskName"])?>">
                     <h3 class="c-hand">
@@ -104,7 +110,7 @@
                         <?=$task["taskDesc"]?>
                     </div>
                     <?php foreach($task["taskShifts"] as $shift) { ?>
-                        <div class="accordion accordion-slot">
+                        <div class="accordion accordion-shift">
                             <input type="checkbox" id="accordion-<?=md5($task["taskName"] . $shift["shiftName"]) . (isset($shift["shiftDesc"]) ? $shift["shiftDesc"] : "")?>" name="accordion-checkbox" hidden>
                             <label class="accordion-header c-hand" for="accordion-<?=md5($task["taskName"] . $shift["shiftName"]) . (isset($shift["shiftDesc"]) ? $shift["shiftDesc"] : "")?>">
                                 <h5 class="c-hand">

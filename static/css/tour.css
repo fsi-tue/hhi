@@ -1,0 +1,38 @@
+/* Popover-Karte */
+.driver-popover {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,.15);
+  padding: 14px 14px 12px;
+  max-width: 360px;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+}
+
+/* Header */
+.driver-popover-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  background: initial;
+}
+
+/* Body */
+.driver-popover-description {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #333;
+}
+
+.driver-popover-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.driver-popover-btn {
+  border-radius: 10px;
+  padding: 8px 12px;
+  border: 1px solid #e3e6ea;
+  background: #fff;
+  font-size: 14px;
+}

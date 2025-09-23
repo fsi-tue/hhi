@@ -21,13 +21,13 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 0px;
 }
 
-.accordion-shift {
+.accordion-task {
     margin-bottom: 5px;
     background-color: #efefef;
     border-radius: 3px;
 }
 
-.accordion-slot {
+.accordion-shift {
     margin-bottom: 5px;
     background-color: #ffffff;
     border-radius: 3px;
@@ -56,22 +56,18 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 5px;
 }
 
-.share-icon {
+.header-icon, .header-icon:visited {
     color: #808080;
     font-size: 200%;
+    margin-left: 7px;
 }
-.print-icon {
-    color: #808080;
-    font-size: 200%;
-    margin-right: 20px;
-}
-
 .fsi-logo {
     font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
     font-weight: bold;
     font-style: oblique;
     font-size: 200%;
     color: #000080;
+    margin-left: 20px;
 }
 
 .hhi-logo {
@@ -159,7 +155,7 @@ h2, h3, h4, h5, h6 {
   width: 1.5em; 
   height: 1.5em;
   margin-right: 0.4em;
-  background-image: url("static/dino.svg");
+  background-image: url("../ico/dino.svg");
   background-repeat: no-repeat;
   background-size: contain; 
   background-position: center;
