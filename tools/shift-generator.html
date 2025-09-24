@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Event JSON Generator</title>
+  <style>
+    :root{
+      --bg: #0b1020;       /* deep ink */
+      --panel:#0f172a;     /* slate-900 */
+      --muted:#94a3b8;     /* slate-400 */
+      --text:#e5e7eb;      /* gray-200 */
+      --accent:#7c3aed;    /* violet-600 */
+      --accent-2:#22d3ee;  /* cyan-400 */
+      --ok:#10b981;        /* emerald */
+      --warn:#f59e0b;      /* amber */
+      --danger:#ef4444;    /* red */
+      --ring: 0 0 0 3px rgba(124,58,237,.35);
+      --radius: 16px;
+      --shadow: 0 10px 30px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(1200px 600px at 10% -10%,rgba(124,58,237,.12),transparent),radial-gradient(900px 600px at 110% 10%,rgba(34,211,238,.10),transparent),var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif}
+    .container{max-width:1200px;margin:40px auto;padding:0 20px}
+    .header{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:18px}
+    h1{font-size:clamp(22px,2.6vw,34px);margin:0;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:14px}
+
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    @media (max-width: 980px){.grid{grid-template-columns:1fr}}
+
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(148,163,184,.15);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .card h2{margin:0 0 14px;font-size:18px}
+    .card .body{padding:18px}
+
+    label{display:block;font-size:13px;color:var(--muted);margin:12px 0 6px}
+    input[type="text"], input[type="number"], textarea{width:100%;background:rgba(15,23,42,.6);border:1px solid rgba(148,163,184,.25);border-radius:12px;padding:12px 14px;color:var(--text);outline:none;transition:.15s}
+    textarea{min-height:90px;resize:vertical}
+    input:focus, textarea:focus{border-color:var(--accent);box-shadow:var(--ring)}
+    input.invalid, textarea.invalid{border-color:var(--danger)}
+
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:640px){.row{grid-template-columns:1fr}}
+
+    .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    button{appearance:none;border:0;border-radius:12px;padding:10px 14px;background:rgba(124,58,237,.12);color:#e9d5ff;cursor:pointer;font-weight:600;display:inline-flex;gap:8px;align-items:center}
+    button:hover{filter:brightness(1.05)}
+    button.secondary{background:rgba(148,163,184,.1);color:#e5e7eb}
+    button.ghost{background:transparent;color:var(--muted)}
+    button.success{background:rgba(16,185,129,.16);color:#d1fae5}
+    button.warn{background:rgba(245,158,11,.16);color:#ffedd5}
+    button.danger{background:rgba(239,68,68,.16);color:#fee2e2}
+
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(124,58,237,.12);color:#c4b5fd;font-size:12px;border:1px solid rgba(124,58,237,.35)}
+
+    .task{border:1px dashed rgba(148,163,184,.25);padding:14px;border-radius:14px;margin:14px 0 0;background:rgba(2,6,23,.25)}
+    .task-header{display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .task-title{font-weight:700}
+    .muted{color:var(--muted)}
+
+    .shift{display:grid;grid-template-columns:1fr 120px 42px;gap:10px;align-items:center;margin-top:8px}
+    .shift input[type="number"]{text-align:center}
+    .shift .del{width:42px;aspect-ratio:1;border-radius:10px;background:rgba(239,68,68,.14)}
+
+    .json{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13px; white-space:pre; background:rgba(2,6,23,.6); padding:14px; border-radius:12px; border:1px solid rgba(148,163,184,.15); max-height:540px; overflow:auto}
+
+    .footer{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+    .badge{font-size:12px;color:var(--muted)}
+
+    .hint{display:flex;gap:8px;align-items:flex-start;background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.35);color:#cffafe;padding:10px 12px;border-radius:12px;margin-top:10px}
+    .hint svg{flex:0 0 auto}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>Event&nbsp;JSON&nbsp;Generator</h1>
+        <div class="sub">Schöne Oberfläche zum Erstellen deiner JSON-Datei – ohne Frameworks, nur HTML/CSS/JS.</div>
+      </div>
+      <span class="pill" id="autosave-pill">Autosave aktiviert</span>
+    </div>
+
+    <div class="grid">
+      <!-- Builder -->
+      <section class="card" aria-labelledby="builder-title">
+        <div class="body">
+          <h2 id="builder-title">Eventdaten</h2>
+
+          <label for="eventName">Event-Name *</label>
+          <input id="eventName" type="text" placeholder="z.B. Clubhausfest WiSe 2025" required>
+
+          <label for="eventDesc">Beschreibung *</label>
+          <textarea id="eventDesc" placeholder="Kurze Beschreibung des Events" required></textarea>
+
+          <div class="row">
+            <div>
+              <label for="eventDate">Datum (TT.MM.JJJJ) *</label>
+              <input id="eventDate" type="text" placeholder="23.10.2025" pattern="^(0?[1-9]|[12][0-9]|3[01])\.(0?[1-9]|1[0-2])\.(19|20|21|22|23|24|25)[0-9]{2}$" required>
+            </div>
+            <div>
+              <label for="eventOrganizer">Veranstalter *</label>
+              <input id="eventOrganizer" type="text" placeholder="FSI, FSK, Psy" required>
+            </div>
+          </div>
+
+          <div class="footer">
+            <div class="badge">* Pflichtfelder</div>
+            <div class="toolbar">
+              <button id="addTaskBtn" title="Neue Aufgabe hinzufügen">+ Aufgabe</button>
+              <button class="secondary" id="expandAllBtn" title="Alle Aufgaben aufklappen">Aufgaben ein/aus</button>
+              <button class="warn" id="loadSampleBtn" title="Beispieldaten laden">Beispiel laden</button>
+              <button class="danger" id="resetBtn" title="Formular leeren">Zurücksetzen</button>
+            </div>
+          </div>
+
+          <div id="tasks"></div>
+
+          <div class="hint" role="status" aria-live="polite">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 9v4m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <div>
+              <strong>Tipp:</strong> JSON wird live generiert. Du kannst es rechts kopieren, herunterladen oder eine vorhandene JSON importieren.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- JSON Preview -->
+      <aside class="card" aria-labelledby="json-title">
+        <div class="body">
+          <h2 id="json-title">JSON-Vorschau</h2>
+          <pre class="json" id="jsonPreview" tabindex="0" aria-label="JSON Vorschau"></pre>
+          <div class="toolbar" style="margin-top:12px">
+            <button class="success" id="downloadBtn">JSON herunterladen</button>
+            <button class="secondary" id="copyBtn">Kopieren</button>
+            <label for="fileInput" class="secondary" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px">Importieren<input id="fileInput" type="file" accept="application/json,.json" style="display:none"></label>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Templates (hidden) -->
+  <template id="taskTemplate">
+    <div class="task" data-task>
+      <div class="task-header">
+        <div class="task-title">
+          <span>Aufgabe</span>
+          <span class="muted" data-task-index></span>
+        </div>
+        <div class="toolbar">
+          <button class="secondary" data-toggle>Ein-/Ausklappen</button>
+          <button class="danger" data-delete-task>Aufgabe löschen</button>
+        </div>
+      </div>
+      <div class="task-content">
+        <label>Bezeichnung *</label>
+        <input type="text" data-task-name placeholder="z.B. Main-Bar" required>
+
+        <label>Beschreibung *</label>
+        <textarea data-task-desc placeholder="Kurzer Beschreibungstext" required></textarea>
+
+        <div class="toolbar" style="margin:6px 0 2px">
+          <button data-add-shift>+ Schicht</button>
+        </div>
+
+        <div data-shifts></div>
+      </div>
+    </div>
+  </template>
+
+  <template id="shiftTemplate">
+    <div class="shift" data-shift>
+      <input type="text" placeholder="z.B. 21:00 - 23:00" data-shift-name required>
+      <input type="number" min="1" max="999" step="1" value="1" data-shift-slots required>
+      <button class="del" title="Schicht entfernen" data-delete-shift>✕</button>
+    </div>
+  </template>
+
+  <script>
+    // ===== Utilities =====
+    const $ = (sel, parent=document) => parent.querySelector(sel);
+    const $$ = (sel, parent=document) => Array.from(parent.querySelectorAll(sel));
+
+    const STORAGE_KEY = 'event-json-builder-v1';
+
+    function sanitizeNumber(n){
+      const x = parseInt(String(n).replace(/[^0-9]/g, ''), 10);
+      return Number.isFinite(x) && x>0 ? x : 1;
+    }
+
+    function getEventData(){
+      const data = {
+        eventName: $('#eventName').value.trim(),
+        eventDesc: $('#eventDesc').value.trim(),
+        eventDate: $('#eventDate').value.trim(),
+        eventOrganizer: $('#eventOrganizer').value.trim(),
+        eventTasks: []
+      };
+      $$('#tasks [data-task]').forEach(task => {
+        const taskName = $('[data-task-name]', task).value.trim();
+        const taskDesc = $('[data-task-desc]', task).value.trim();
+        const taskShifts = [];
+        $$('#tasks [data-task] [data-shifts] [data-shift]', task).forEach(shift => {
+          const shiftName = $('[data-shift-name]', shift).value.trim();
+          const shiftSlots = sanitizeNumber($('[data-shift-slots]', shift).value);
+          if(shiftName){ taskShifts.push({ shiftName, shiftSlots }); }
+        });
+        if(taskName){ data.eventTasks.push({ taskName, taskDesc, taskShifts }); }
+      });
+      return data;
+    }
+
+    function setEventData(data){
+      // Basic fields
+      $('#eventName').value = data.eventName || '';
+      $('#eventDesc').value = data.eventDesc || '';
+      $('#eventDate').value = data.eventDate || '';
+      $('#eventOrganizer').value = data.eventOrganizer || '';
+
+      // Tasks
+      $('#tasks').innerHTML='';
+      (data.eventTasks || []).forEach(addTask);
+      if((data.eventTasks || []).length === 0){ addTask(); }
+      render();
+    }
+
+    function render(){
+      // Validation light-touch
+      $$('input[required], textarea[required]').forEach(el=>{
+        const valid = !!el.value.trim();
+        el.classList.toggle('invalid', !valid);
+      });
+
+      const data = getEventData();
+      $('#jsonPreview').textContent = JSON.stringify(data, null, 2);
+
+      // Autosave
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }catch(e){ /* ignore */ }
+    }
+
+    // ===== Task/Shift Builders =====
+    function addTask(prefill){
+      const tpl = document.importNode($('#taskTemplate').content, true);
+      const task = tpl.querySelector('[data-task]');
+      const shiftsWrap = $('[data-shifts]', task);
+
+      // events
+      $('[data-add-shift]', task).addEventListener('click', () => {
+        addShift(shiftsWrap);
+      });
+      $('[data-delete-task]', task).addEventListener('click', () => {
+        task.remove();
+        reindexTasks();
+        render();
+      });
+      $('[data-toggle]', task).addEventListener('click', () => {
+        $('.task-content', task).style.display = $('.task-content', task).style.display === 'none' ? '' : 'none';
+      });
+
+      // inputs
+      $('[data-task-name]', task).addEventListener('input', render);
+      $('[data-task-desc]', task).addEventListener('input', render);
+
+      $('#tasks').appendChild(task);
+
+      // prefill or empty
+      if(prefill){
+        $('[data-task-name]', task).value = prefill.taskName || '';
+        $('[data-task-desc]', task).value = prefill.taskDesc || '';
+        (prefill.taskShifts || []).forEach(s=> addShift(shiftsWrap, s));
+      }else{
+        addShift(shiftsWrap);
+      }
+
+      reindexTasks();
+      render();
+    }
+
+    function reindexTasks(){
+      $$('#tasks [data-task]').forEach((t,i)=>{
+        $('[data-task-index]', t).textContent = `#${i+1}`;
+      });
+    }
+
+    function addShift(container, prefill){
+      const tpl = document.importNode($('#shiftTemplate').content, true);
+      const shift = tpl.querySelector('[data-shift]');
+      container.appendChild(shift);
+
+      if(prefill){
+        $('[data-shift-name]', shift).value = prefill.shiftName || '';
+        $('[data-shift-slots]', shift).value = prefill.shiftSlots ?? 1;
+      }
+
+      $('[data-shift-name]', shift).addEventListener('input', render);
+      $('[data-shift-slots]', shift).addEventListener('input', e=>{ e.target.value = sanitizeNumber(e.target.value); render(); });
+      $('[data-delete-shift]', shift).addEventListener('click', ()=>{ shift.remove(); render(); });
+
+      render();
+    }
+
+    // ===== Actions =====
+    function download(filename, text){
+      const blob = new Blob([text], {type: 'application/json;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      setTimeout(()=>URL.revokeObjectURL(url), 1000);
+    }
+
+    function copyToClipboard(text){
+      if(navigator.clipboard){ return navigator.clipboard.writeText(text); }
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve();
+    }
+
+    function loadSample(){
+      const sample = {
+        "eventName": "Clubhausfest WiSe 2025",
+        "eventDesc": "Clubhausfest der Fachschaften Informatik, Kognitionswisschenschaft und Psychologie",
+        "eventDate": "23.10.2025",
+        "eventOrganizer": "FSI, FSK, Psy",
+        "eventTasks": [
+          {"taskName":"Aufbau","taskDesc":"Surprise, was sollt ihr wohl tun?","taskShifts":[{"shiftName":"18:00 - 21:00","shiftSlots":10},{"shiftName":"18:00 - 21:00 mit Auto","shiftSlots":3}]},
+          {"taskName":"Main-Bar","taskDesc":"Verkauf von Getränken an der Mainfloor Bar.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":4},{"shiftName":"23:00 - 01:00","shiftSlots":4},{"shiftName":"01:00 - 03:00","shiftSlots":4}]},
+          {"taskName":"Techno-Bar","taskDesc":"Verkauf von Getränken an der Technofloor Bar.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":4},{"shiftName":"23:00 - 01:00","shiftSlots":4},{"shiftName":"01:00 - 03:00","shiftSlots":4}]},
+          {"taskName":"Nachschub Bars","taskDesc":"Ihr sorgt dafür, dass die Bars ausreichend Getränke haben und keine Engpässe entstehen.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":4},{"shiftName":"23:00 - 01:00","shiftSlots":4},{"shiftName":"01:00 - 03:00","shiftSlots":4}]},
+          {"taskName":"Becher spülen","taskDesc":"Die an den Bars verwendeten Mehrwegbecher müssen für die Wiederbenutzung gespült und wieder zurückgebracht werden.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":4},{"shiftName":"23:00 - 01:00","shiftSlots":4},{"shiftName":"01:00 - 03:00","shiftSlots":4}]},
+          {"taskName":"Ordner:innen","taskDesc":"Man sorgt in Zweierteams dafür, dass sich niemand reinschleicht oder am Kühlwagen bedient. Außerdem seid ihr die erste Anlaufstelle für Beschwerden und sorgt für Ordnung auf dem Fest.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":8},{"shiftName":"23:00 - 01:00","shiftSlots":8},{"shiftName":"01:00 - 03:00","shiftSlots":8}]},
+          {"taskName":"Awareness-Team","taskDesc":"Ihr kümmert euch in Situationen, in denen es zu grenzüberschreitendem Verhalten gekommen ist, um die betroffenen Personen: emotionale erste Hilfe.","taskShifts":[{"shiftName":"21:00 - 23:00","shiftSlots":2},{"shiftName":"23:00 - 01:00","shiftSlots":2},{"shiftName":"01:00 - 03:00","shiftSlots":2}]},
+          {"taskName":"Einlass & Auslass","taskDesc":"Man zählt über eine gemeinsame App die Anzahl der Besucher. Dabei darf eine Besucherzahl von 520 Menschen nicht überschritten werden.","taskShifts":[{"shiftName":"21:00 - 23:00 Einlass","shiftSlots":3},{"shiftName":"21:00 - 23:00 Auslass","shiftSlots":3},{"shiftName":"23:00 - 01:00 Einlass","shiftSlots":3},{"shiftName":"23:00 - 01:00 Auslass","shiftSlots":3},{"shiftName":"01:00 - 03:00 Einlass","shiftSlots":3},{"shiftName":"01:00 - 03:00 Auslass","shiftSlots":3}]},
+          {"taskName":"Abbau","taskDesc":"Bis zum bitteren Ende.","taskShifts":[{"shiftName":"03:00 - Ende","shiftSlots":10},{"shiftName":"03:00 - Ende mit Auto","shiftSlots":3}]}
+        ]
+      };
+      setEventData(sample);
+    }
+
+    function resetForm(){
+      setEventData({eventName:'',eventDesc:'',eventDate:'',eventOrganizer:'',eventTasks:[]});
+    }
+
+    // ===== Init =====
+    function init(){
+      // Wire top-level inputs
+      ['eventName','eventDesc','eventDate','eventOrganizer'].forEach(id=>{
+        const el = document.getElementById(id);
+        el.addEventListener('input', render);
+      });
+
+      // Buttons
+      document.getElementById('addTaskBtn').addEventListener('click', ()=> addTask());
+      document.getElementById('loadSampleBtn').addEventListener('click', loadSample);
+      document.getElementById('resetBtn').addEventListener('click', resetForm);
+      document.getElementById('expandAllBtn').addEventListener('click', ()=>{
+        $$('#tasks [data-task]').forEach(t=>{
+          const c = $('.task-content', t);
+          c.style.display = c.style.display === 'none' ? '' : 'none';
+        });
+      });
+
+      document.getElementById('downloadBtn').addEventListener('click', ()=>{
+        const json = $('#jsonPreview').textContent;
+        const name = (document.getElementById('eventName').value.trim() || 'event')
+          .toLowerCase().replace(/[^a-z0-9]+/gi,'-').replace(/(^-|-$)/g,'');
+        download(`${name||'event'}.json`, json);
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', async ()=>{
+        await copyToClipboard($('#jsonPreview').textContent);
+        const btn = document.getElementById('copyBtn');
+        const old = btn.textContent; btn.textContent = 'Kopiert!';
+        setTimeout(()=> btn.textContent = old, 1200);
+      });
+
+      // Import
+      document.getElementById('fileInput').addEventListener('change', async (e)=>{
+        const file = e.target.files[0]; if(!file) return;
+        const text = await file.text();
+        try{ const data = JSON.parse(text); setEventData(data); }
+        catch(err){ alert('Ungültige JSON-Datei.'); }
+        e.target.value = '';
+      });
+
+      // Restore autosaved
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if(saved){
+        try{ setEventData(JSON.parse(saved)); }
+        catch{ addTask(); render(); }
+      } else {
+        addTask();
+        render();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
