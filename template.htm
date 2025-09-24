@@ -38,6 +38,39 @@
             function hideRegistrationDialog() {
                 document.getElementById("modal-registration").classList.remove("active");
             }
+
+            function toggleTheme() {
+                const root = document.documentElement;
+                const current = root.getAttribute("data-theme");
+                if (current === "dark") {
+                    root.removeAttribute("data-theme");
+                    localStorage.setItem("theme", "light");
+                } else {
+                    root.setAttribute("data-theme", "dark");
+                    localStorage.setItem("theme", "dark");
+                }
+            }
+
+            /* load stored theme preference at site load */
+            (function() {
+                const root = document.documentElement;
+                const saved = localStorage.getItem("theme");
+                if (saved === "dark") {
+                    document.documentElement.setAttribute("data-theme", "dark");
+                } else if (saved === "light") {
+                    document.documentElement.removeAttribute("data-theme");
+                } else {
+                    /* fallback to system preference (no cookie available) */
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    if(prefersDark) {
+                        root.setAttribute("data-theme", "dark");
+                        localStorage.setItem("theme", "dark");
+                    } else {
+                        root.removeAttribute("data-theme");
+                        localStorage.setItem("theme", "light");
+                    }
+                }
+            })();
         </script>
     </head>
     <body>
@@ -52,6 +85,9 @@
             <section class="navbar-section">
                 <a href="javascript:tour.drive();" class="header-icon">
                     <i class="si-question-circle"></i>
+                </a>
+                <a href="javascript:toggleTheme();" class="header-icon">
+                    <i class="si-lightbulb"></i>
                 </a>
                 <a href="javascript:shareDialog();" class="header-icon">
                     <i class="si-share"></i>
