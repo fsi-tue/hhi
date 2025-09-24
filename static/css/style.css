@@ -179,8 +179,8 @@ h2, h3, h4, h5, h6 {
 .fs-info-dino::before {
   content: "";
   display: inline-block;
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.3em;
+  height: 1.3em;
   margin-right: 0.4em;
   -webkit-mask: url("../ico/dino.svg") no-repeat center / contain;
   mask: url("../ico/dino.svg") no-repeat center / contain;
