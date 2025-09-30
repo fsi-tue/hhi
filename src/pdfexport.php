@@ -45,10 +45,12 @@ function handlePdfExport($config, &$eventInfo) {
         $pdf->AddPage();
         $pdf->SetFont("DejaVu", "B", 24);
         $pdf->Ln(6);
-        $pdf->Cell(0, 10, "Schichtplan " . $task["taskName"], 0, 0, "C");
+        $pdf->Cell(0, 10, "Schichtplan " . html_entity_decode($task["taskName"]), 0, 0, "C");
         $pdf->Ln(13);
         $pdf->SetFont("DejaVu", "I", 12);
-        $pdf->MultiCell(0, 6, $task["taskDesc"], 0, "C");
+        $pdf->MultiCell(0, 6, 
+            strip_tags(html_entity_decode(str_replace(array("<br/>", "<br>"), "\n", $task["taskDesc"]))), 
+            0, "C");
         $pdf->Ln(3);
         /* table header */
         /* scale to max width */
