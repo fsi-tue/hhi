@@ -16,6 +16,11 @@
         <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
         <script src="static/js/tour.js" defer></script>
         <link rel="stylesheet" href="static/css/tour.css" />
+        <style type="text/css">
+            /* little css hack */
+            .progress::-webkit-progress-value { background-color: <?=$eventInfo["occupancyColor"]?>; }
+            .progress::-moz-progress-bar     { background-color: <?=$eventInfo["occupancyColor"]?>; }
+        </style>
         <script type="text/javascript">
             function shareDialog() {
                 const shareData = {
@@ -120,6 +125,7 @@
                     <?=$eventInfo["eventDesc"]?>
                 </div>
             </div>
+            <div class="divider"></div>
         </div>
 
         <div class="text-center toast-info">
@@ -255,9 +261,19 @@
                 </form>
             </div>
         </div>
+
+
+
+
+
         <footer class="navbar footer">
             <section class="navbar-section footer-left">
                 <a href="https://github.com/fsi-tue/hhi">Source Code on GitHub</a>
+            </section>
+            <section class="navbar-section">
+                <div class="progress-ring" style="--progress: <?=$eventInfo["occupancyPercentage"] * 100?>; --fill-color: <?=$eventInfo["occupancyColor"]?>">
+                    <span class="progress-text"><?=$eventInfo["occupancyString"]?></span>
+                </div>
             </section>
             <section class="navbar-section footer-right">
                 <div class="contributors">

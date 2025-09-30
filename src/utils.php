@@ -1,5 +1,7 @@
 <?php
 function calculcateOccupancy(&$eventInfo) {
+    $eventEntries = 0;
+    $eventSlots = 0;
     foreach($eventInfo["eventTasks"] as $taskIndex => &$task) {
         $taskEntries = 0;
         $taskSlots = 0;
@@ -16,10 +18,15 @@ function calculcateOccupancy(&$eventInfo) {
             $shift["occupancyColor"] = getOccupancyColorFromPercentage($shift["occupancyPercentage"]);
             $shift["occupancyString"] = getOccupancyStringFromPercentage($shift["occupancyPercentage"]);
         }
+        $eventEntries += $taskEntries;
+        $eventSlots += $taskSlots;
         $task["occupancyPercentage"] = $taskEntries / $taskSlots;
         $task["occupancyColor"] = getOccupancyColorFromPercentage($task["occupancyPercentage"]);
         $task["occupancyString"] = getOccupancyStringFromPercentage($task["occupancyPercentage"]);
     }
+    $eventInfo["occupancyPercentage"] = $eventEntries / $eventSlots;
+    $eventInfo["occupancyColor"] = getOccupancyColorFromPercentage($eventInfo["occupancyPercentage"]);
+    $eventInfo["occupancyString"] = getOccupancyStringFromPercentage($eventInfo["occupancyPercentage"]);
 }
 
 function getOccupancyColorFromPercentage($p) {
