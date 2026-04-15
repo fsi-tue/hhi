@@ -24,19 +24,20 @@ RedirectMatch 404 /*\.json
 
 
 ### Details: `config.json`
-| Key               | Description                                                                 | Required  |
-|-------------------|-----------------------------------------------------------------------------|-----------|
-| `shiftFile`       | Path to JSON with shift definitions (see next chapter)                      | yes       |
-| `adminMail`       | Mail address of the administrator who will receive the csv export           | yes       |
-| `baseUrl`         | The base URL of the service, usually ending with `index.php`                | yes       |
-| `hashSalt`        | Salt for the registration hashs                                             | yes       |
-| `enableRegister`  | Enable or disable registration function                                     | yes       |
-| `enableUnegister` | Enable or disable unregistration function                                   | yes       |
-| `mail.username`   | Username for SMTP server                                                    | yes       |
-| `mail.password`   | Password for SMTP server                                                    | yes       |
-| `mail.smtpserv`   | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes       |
-| `mail.fromaddress`| Sender's mail address                                                       | yes       |
-| `mail.fromname`   | Sender's human readable name                                                | yes       |
+| Key                | Description                                                                 | Required  |
+|--------------------|-----------------------------------------------------------------------------|-----------|
+| `shiftFile`        | Path to JSON with shift definitions (see next chapter)                      | yes       |
+| `adminMail`        | Mail address of the administrator who will receive the csv export           | yes       |
+| `baseUrl`          | The base URL of the service, usually ending with `index.php`                | yes       |
+| `hashSalt`         | Salt for the registration hashs                                             | yes       |
+| `enableRegister`   | Enable or disable registration function                                     | yes       |
+| `enableUnregister` | Enable or disable unregistration function                                   | yes       |
+| `hideNames`        | Hide registered names in shift overview                                     | yes       |
+| `mail.username`    | Username for SMTP server                                                    | yes       |
+| `mail.password`    | Password for SMTP server                                                    | yes       |
+| `mail.smtpserv`    | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes       |
+| `mail.fromaddress` | Sender's mail address                                                       | yes       |
+| `mail.fromname`    | Sender's human readable name                                                | yes       |
 
 *The key name in this table follows the syntax `key.subkey` => `{"key": {"subkey": value}}`*
 

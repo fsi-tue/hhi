@@ -59,4 +59,17 @@ function appendClasses(&$eventInfo) {
     }
 }
 
+function hideEntryNames(&$eventInfo) {
+    foreach($eventInfo["eventTasks"] as $taskIndex => &$task) {
+        foreach($task["taskShifts"] as $shiftIndex => &$shift) {
+            if(isset($shift["entries"])) {
+                foreach($shift["entries"] as $entryIndex => &$entry) {
+                    $entry["entryName"] = "<i>belegt</i>";
+                    $entry["entryClass"] .= "";
+                }
+            } 
+        }
+    }
+}
+
 ?>
