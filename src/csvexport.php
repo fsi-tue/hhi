@@ -14,12 +14,14 @@ function handleCsvExport($config, &$eventInfo) {
                 $result .= html_entity_decode($task["taskName"]) . $colDelim;
                 $result .= html_entity_decode($shift["shiftName"]) . $colDelim;
                 $result .= html_entity_decode($entry["entryName"]) . $colDelim;
-                $result .= html_entity_decode($entry["entryMail"]) . $colDelim;
+                $result .= html_entity_decode($entry["entryMail"] ?? "") . $colDelim;
                 $result .= date(DATE_ATOM, $entry["entryTimestamp"] ?? 0);
                 $result .= $rowDelim;
             }
         }
     }
+    /* generate pdf file */
+    $binaryPdf = exportPdfAsString($config, $eventInfo);
     /* generate admin mail */
     $mail = new PHPMailer(true);
     try {
@@ -40,6 +42,7 @@ function handleCsvExport($config, &$eventInfo) {
         $mail->Subject = "EXPORT Helfiliste " . $eventInfo["eventName"];
         $mail->Body = "see attachment";
         $mail->AddStringAttachment($result, "export.csv");
+        $mail->AddStringAttachment($binaryPdf, "plan.pdf");
         $mail->send();
         echo "mail sent, everything okay";
     } catch (Exception $e) {
