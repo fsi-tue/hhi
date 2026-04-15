@@ -87,6 +87,7 @@ switch ($action) {
         }
         break;
     case "pdfexport":
+        if($config["hidePdfExport"]) die("config option 'hidePdfExport' is set. abort.");
         handlePdfExport($config, $eventInfo);
         exit(0);
     case "csvexport":

@@ -97,9 +97,11 @@
                 <a href="javascript:shareDialog();" class="header-icon">
                     <i class="si-share"></i>
                 </a>
+                <?php if( ! $config["hidePdfExport"]) { ?>
                 <a href="?action=pdfexport" class="header-icon">
                     <i class="si-printer"></i>
                 </a>
+                <?php } ?>
                 <span class="fsi-logo">fsi</span>
             </section>
         </header>
