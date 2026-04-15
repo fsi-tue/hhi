@@ -5,6 +5,7 @@ require 'lib/PHPMailer/src/Exception.php';
 require 'lib/PHPMailer/src/PHPMailer.php';
 require 'lib/PHPMailer/src/SMTP.php';
 require 'lib/constants.php';
+require 'src/i18n.php';
 require 'src/utils.php';
 require 'src/register.php';
 require 'src/unregister.php';
@@ -13,6 +14,7 @@ require 'src/csvexport.php';
 
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
+i18n_set_locale($config["language"] ?? I18N_DEFAULT_LOCALE);
 
 /* main event data */
 $eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);
@@ -37,19 +39,19 @@ switch ($action) {
         if($method == "GET") {
             switch($_GET["msg"]) {
                 case MSG_REGISTER_SUCCESS:
-                    $toast = array("style" => "success", "message" => "Deine Registrierung wurde gespeichert. Falls Du Dich austragen möchtest, kannst Du das über den Link in der Bestätigungsmail tun.");    
+                    $toast = array("style" => "success", "message" => i18n("toast.register.success"));
                     break;
                 case MSG_REGISTER_UNKNOWN:
-                    $toast = array("style" => "error", "message" => "Fehler bei Registrierung: Unbekannte Aufgabe/Schicht.");
+                    $toast = array("style" => "error", "message" => i18n("toast.register.unknown"));
                     break;
                 case MSG_REGISTER_FAILURE:
-                    $toast = array("style" => "error", "message" => "Fehler: Bestätigungsmail konnte nicht versendet werden (ZX-Kürzel unbekannt).<br/><br/>Eintrag im Dienstplan wurde <b>nicht</b> erstellt."); 
+                    $toast = array("style" => "error", "message" => i18n("toast.register.failure"));
                     break;
                 case MSG_REGISTER_NOSPACE:
-                    $toast = array("style" => "error", "message" => "Diese Schicht ist leider schon voll!");   
+                    $toast = array("style" => "error", "message" => i18n("toast.register.no_space"));
                     break;
                 case MSG_REGISTER_DISABLED:
-                    $toast = array("style" => "warning", "message" => "Die Registrierung für diese Veranstaltung wurde deaktiviert.");
+                    $toast = array("style" => "warning", "message" => i18n("toast.register.disabled"));
                     break;
             }
         }
@@ -58,7 +60,7 @@ switch ($action) {
         $hash = $_GET["hash"];
         $unregisterLink = "{$config["baseUrl"]}?action=unregister&hash={$hash}";
         if(isHashExisting($_GET['hash'] ?? '', $config, $eventInfo)) {
-            $toast = array("style" => "primary", "message" => "<h3>Abmeldung</h3><p>Möchtest Du dich wirklich aus Deiner Schicht abmelden?</p><p><a class='btn' href='{$unregisterLink}'>Ja, melde mich ab!</a><a class='btn' href='{$config['baseUrl']}'>Nein, bleibe dabei!</a></p>");
+            $toast = array("style" => "primary", "message" => "<h3>" . i18n("toast.unregister_dialog.title") . "</h3><p>" . i18n("toast.unregister_dialog.question") . "</p><p><a class='btn' href='{$unregisterLink}'>" . i18n("toast.unregister_dialog.confirm") . "</a><a class='btn' href='{$config['baseUrl']}'>" . i18n("toast.unregister_dialog.cancel") . "</a></p>");
         }
         break;
     case "unregister":
@@ -75,19 +77,19 @@ switch ($action) {
         if(isset($_GET["msg"])) {
             switch($_GET["msg"]) {
                 case MSG_UNREGISTER_SUCCESS:
-                    $toast= array("style" => "success", "message" => "Du hast Dich erfolgreich aus Deiner Schicht abgemeldet.");
+                    $toast= array("style" => "success", "message" => i18n("toast.unregister.success"));
                     break;
                 case MSG_UNREGISTER_UNKNOWN:
-                    $toast = array("style" => "error", "message" => "Fehler: Unbekannter Fingerprint oder Abmeldung bereits durchgeführt.");
+                    $toast = array("style" => "error", "message" => i18n("toast.unregister.unknown"));
                     break;
                 case MSG_UNREGISTER_DISABLED:
-                    $toast = array("style" => "warning", "message" => "Die Abmeldung für diese Veranstaltung wurde deaktiviert.");
+                    $toast = array("style" => "warning", "message" => i18n("toast.unregister.disabled"));
                     break;
             }
         }
         break;
     case "pdfexport":
-        if($config["hidePdfExport"]) die("config option 'hidePdfExport' is set. abort.");
+        if($config["hidePdfExport"]) die(i18n("error.pdf_export_hidden"));
         handlePdfExport($config, $eventInfo);
         exit(0);
     case "csvexport":

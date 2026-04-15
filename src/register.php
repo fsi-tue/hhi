@@ -6,7 +6,7 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
     /* re-read data with exclusive lock for persistence */
     $fp = fopen($config["shiftFile"], "r+");
     if( ! flock($fp, LOCK_EX) ) {
-        die("ERROR: Cannot obtain file lock.");
+        die(i18n("error.file_lock"));
     }
     $rawData = fread($fp, filesize($config["shiftFile"]));
     $eventInfo = json_decode($rawData, true);
@@ -63,17 +63,18 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
             $mail->CharSet = "UTF-8";
             /* content */
             $mail->isHTML(false);
-            $mail->Subject = "Helfiliste " . $eventInfo["eventName"];
-            $mail->Body = "Hallo {$entry["entryName"]}!\n\nVielen Dank für Deine Hilfe. Du hast Dich für folgende Schicht eingetragen:\n
-Veranstaltung: {$eventInfo["eventName"]}
-Datum: {$eventInfo["eventDate"]}
-Schicht: {$taskName} ({$shiftName})\n
-Falls Du Dich abmelden möchtest, benutze bitte folgenden Link: \n
-{$config["baseUrl"]}?action=unregisterDialog&hash={$entry["entryHash"]}\n
-Du erhältst ein paar Tage vor der Veranstaltung eine weitere Mail mit genaueren Informationen zu Deiner Schicht.
-\n\n
-Mit freundlichen Grüßen
-{$eventInfo["eventOrganizer"]}";
+            $mail->Subject = i18n("mail.register.subject", [
+                "eventName" => $eventInfo["eventName"]
+            ]);
+            $mail->Body = i18n("mail.register.body", [
+                "entryName" => $entry["entryName"],
+                "eventName" => $eventInfo["eventName"],
+                "eventDate" => $eventInfo["eventDate"],
+                "taskName" => $taskName,
+                "shiftName" => $shiftName,
+                "unregisterUrl" => "{$config["baseUrl"]}?action=unregisterDialog&hash={$entry["entryHash"]}",
+                "eventOrganizer" => $eventInfo["eventOrganizer"]
+            ]);
             $mail->send();
         } catch (Exception $e) {
             flock($fp, LOCK_UN);

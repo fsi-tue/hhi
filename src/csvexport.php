@@ -6,7 +6,13 @@ function handleCsvExport($config, &$eventInfo) {
     /* generate entry csv */
     $colDelim = ";";
     $rowDelim = "\n";
-    $result = implode($colDelim, array("task", "shift", "name", "mail", "timestamp")) . $rowDelim;
+    $result = implode($colDelim, array(
+        i18n("export.csv.header.task"),
+        i18n("export.csv.header.shift"),
+        i18n("export.csv.header.name"),
+        i18n("export.csv.header.mail"),
+        i18n("export.csv.header.timestamp")
+    )) . $rowDelim;
     foreach($eventInfo["eventTasks"] as $taskIndex => $task) {
         foreach($task["taskShifts"] as $shiftIndex => $shift) {
             if( ! isset($shift["entries"])) continue;
@@ -35,17 +41,17 @@ function handleCsvExport($config, &$eventInfo) {
         $mail->Port = 587;
         /* smtp mail settings */
         $mail->setFrom($config["mail"]["fromaddress"], $config["mail"]["fromname"]);
-        $mail->addAddress($config["adminMail"], "Event Administrator");
+        $mail->addAddress($config["adminMail"], i18n("export.mail.recipient_name"));
         $mail->CharSet = "UTF-8";
         /* content */
         $mail->isHTML(false);
-        $mail->Subject = "EXPORT Helfiliste " . $eventInfo["eventName"];
-        $mail->Body = "see attachment";
-        $mail->AddStringAttachment($result, "export.csv");
-        $mail->AddStringAttachment($binaryPdf, "plan.pdf");
+        $mail->Subject = i18n("export.mail.subject", ["eventName" => $eventInfo["eventName"]]);
+        $mail->Body = i18n("export.mail.body");
+        $mail->AddStringAttachment($result, i18n("export.csv.filename"));
+        $mail->AddStringAttachment($binaryPdf, i18n("export.pdf.filename"));
         $mail->send();
-        echo "mail sent, everything okay";
+        echo i18n("export.status.success");
     } catch (Exception $e) {
-        echo "unknown error";
+        echo i18n("export.status.error");
     }
 }

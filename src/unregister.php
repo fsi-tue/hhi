@@ -3,7 +3,7 @@ function handleUnregister(string $hash, array $config, array &$eventInfo): int {
     /* re-read data with exclusive lock for persistence */
     $fp = fopen($config["shiftFile"], "r+");
     if( ! flock($fp, LOCK_EX) ) {
-        die("ERROR: Cannot obtain file lock.");
+        die(i18n("error.file_lock"));
     }
     $rawData = fread($fp, filesize($config["shiftFile"]));
     $eventInfo = json_decode($rawData, true);

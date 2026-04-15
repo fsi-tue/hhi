@@ -64,7 +64,7 @@ function hideEntryNames(&$eventInfo) {
         foreach($task["taskShifts"] as $shiftIndex => &$shift) {
             if(isset($shift["entries"])) {
                 foreach($shift["entries"] as $entryIndex => &$entry) {
-                    $entry["entryName"] = "<i>belegt</i>";
+                    $entry["entryName"] = i18n("entry.occupied");
                     $entry["entryClass"] .= "";
                 }
             } 

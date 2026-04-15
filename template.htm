@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>
-            FSI HHI
+            <?=i18n("app.title")?>
         </title>
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
@@ -24,8 +24,8 @@
         <script type="text/javascript">
             function shareDialog() {
                 const shareData = {
-                    title: "HHI",
-                    text: "Hey!\nUnterstütze uns bei <?=$eventInfo["eventName"]?> und übernimm eine Schicht.\n",
+                    title: <?=json_encode(i18n("share.title"), JSON_UNESCAPED_UNICODE)?>,
+                    text: <?=json_encode(i18n("share.text", ["eventName" => $eventInfo["eventName"]]), JSON_UNESCAPED_UNICODE)?>,
                     url: "<?=$config["baseUrl"]?>"
                 };
                 navigator.share(shareData);
@@ -82,9 +82,9 @@
         <header class="navbar">
             <section class="navbar-section">
                 <a class="hhi-logo" href="<?=$config["baseUrl"]?>">
-                    <span class="hhi-logo-first">H</span>elfilisten<br/>
-                    <span class="hhi-logo-first">H</span>osting<br/>
-                    <span class="hhi-logo-first">I</span>nterface
+                    <span class="hhi-logo-first">H</span><?=i18n("app.logo.line1_suffix")?><br/>
+                    <span class="hhi-logo-first">H</span><?=i18n("app.logo.line2_suffix")?><br/>
+                    <span class="hhi-logo-first">I</span><?=i18n("app.logo.line3_suffix")?>
                 </a>
             </section>
             <section class="navbar-section">
@@ -174,15 +174,15 @@
                                 <table class="table table-striped table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Nr.</th>
-                                            <th>Name</th>
+                                            <th><?=i18n("table.number")?></th>
+                                            <th><?=i18n("table.name")?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php for($i = 0; $i < $shift["shiftSlots"]; $i++) { ?>
                                         <tr>
                                             <td><?=$i+1?></td>
-                                            <td class="<?=$shift["entries"][$i]["entryClass"]??""?>"><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : "<i>leer</i>"?></td>
+                                            <td class="<?=$shift["entries"][$i]["entryClass"]??""?>"><?=isset($shift["entries"][$i]) ? $shift["entries"][$i]["entryName"] : i18n("entry.empty")?></td>
                                         </tr>
                                     <?php } ?>
                                     </tbody>
@@ -190,7 +190,7 @@
                                 <?php if( $config["enableRegister"] 
                                     && (!isset($shift["entries"]) || count($shift["entries"]) < $shift["shiftSlots"])) { ?>  
                                 <a href="javascript:showRegistrationDialog('<?=$task["taskName"]?>', '<?=$shift["shiftName"]?>')" 
-                                    class="btn btn-primary btn-register">Hier eintragen</a>
+                                    class="btn btn-primary btn-register"><?=i18n("shift.register_button")?></a>
                                 <?php } ?>
                             </div>
                         </div>
@@ -201,21 +201,21 @@
             <?php } ?>
         </section>
         <div class="modal" id="modal-registration">
-            <a href="javascript:hideRegistrationDialog()" class="modal-overlay" aria-label="Close"></a>
+            <a href="javascript:hideRegistrationDialog()" class="modal-overlay" aria-label="<?=htmlspecialchars(i18n("common.close"))?>"></a>
             <div class="modal-container">
                 <div class="modal-header">
-                <a href="javascript:hideRegistrationDialog()" class="btn btn-clear float-right" aria-label="Close"></a>
+                <a href="javascript:hideRegistrationDialog()" class="btn btn-clear float-right" aria-label="<?=htmlspecialchars(i18n("common.close"))?>"></a>
                 <form method="POST" id="form-register">
-                    <div class="modal-title h5">In Schicht eintragen</div>
+                    <div class="modal-title h5"><?=i18n("registration.modal_title")?></div>
                     </div>
                     <div class="modal-body">
                         <div class="content">
                             <div class="text-center">
-                                Vielen Dank für Deine Hilfe! <i class="si-heart"></i>
+                                <?=i18n("registration.thanks")?> <i class="si-heart"></i>
                             </div>
                             <div class="text-center">
-                                <b>Aufgabe:</b> <span id="registration-task"></span><br/>
-                                <b>Schicht:</b> <span id="registration-shift"></span><br/>
+                                <b><?=i18n("registration.task_label")?></b> <span id="registration-task"></span><br/>
+                                <b><?=i18n("registration.shift_label")?></b> <span id="registration-shift"></span><br/>
                             </div>
                             <div class="form-horizontal">
                                 <input type="hidden" name="action" value="register" />
@@ -223,32 +223,30 @@
                                 <input type="hidden" id="input-shift" name="data-shift" value="" />
                                 <div class="form-group">
                                     <div class="col-3 col-sm-12">
-                                        <label class="form-label" for="input-name">Dein Name:</label>
+                                        <label class="form-label" for="input-name"><?=i18n("registration.name_label")?></label>
                                     </div>
                                     <div class="col-9 col-sm-12">
-                                        <input class="form-input" type="text" id="input-name" name="data-name" placeholder="fachschaft.name" minlength="3" required>
+                                        <input class="form-input" type="text" id="input-name" name="data-name" placeholder="<?=htmlspecialchars(i18n("registration.name_placeholder"))?>" minlength="3" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-3 col-sm-12">
                                         <div class="popover">
-                                            <label class="form-label" for="input-zxnick">Dein ZX-Kürzel: <i class="si-question-circle"></i></label>
+                                            <label class="form-label" for="input-zxnick"><?=i18n("registration.zx_label")?> <i class="si-question-circle"></i></label>
                                             <div class="popover-container popover-zxnick">
                                                 <div class="card">
                                                     <div class="card-header text-tiny">
-                                                        <b>Wofür benötigen wir Dein ZX-Kürzel?</b>
+                                                        <b><?=i18n("registration.zx_help_title")?></b>
                                                     </div>
                                                     <div class="card-body text-tiny">
-                                                        Wir benötigen Dein ZX-Kürzel lediglich, um Dir eine Mail an Deine studentische
-                                                        Mailadresse zu senden. Nach der Veranstaltung wird das ZX-Kürzel natürlich sofort
-                                                        wieder gelöscht und von uns nicht anderweitig benutzt. 
+                                                        <?=i18n("registration.zx_help_body")?>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-9 col-sm-12">
-                                        <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="zxabc12" pattern="^(?:zx|ii)\w{3}\d{2}$|^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
+                                        <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="<?=htmlspecialchars(i18n("registration.zx_placeholder"))?>" pattern="^(?:zx|ii)\w{3}\d{2}$|^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
                                     </div>
                                 </div>
                             </div>
@@ -257,10 +255,10 @@
                     <div class="modal-footer">
                         <div class="columns">
                             <div class="col-6 text-center">
-                                <a href="javascript:hideRegistrationDialog()" class="btn btn-primary">Abbrechen</a>
+                                <a href="javascript:hideRegistrationDialog()" class="btn btn-primary"><?=i18n("registration.cancel")?></a>
                             </div>
                             <div class="col-6 text-center">
-                                <input type="submit" class="btn btn-primary" value="Eintragen" />
+                                <input type="submit" class="btn btn-primary" value="<?=htmlspecialchars(i18n("registration.submit"))?>" />
                             </div>
                         </div>
                     </div>
@@ -274,7 +272,7 @@
 
         <footer class="navbar footer">
             <section class="navbar-section footer-left">
-                <a href="https://github.com/fsi-tue/hhi">Source Code on GitHub</a>
+                <a href="https://github.com/fsi-tue/hhi"><?=i18n("footer.source_code")?></a>
             </section>
             <section class="navbar-section">
                 <div class="progress-ring" style="--progress: <?=$eventInfo["occupancyPercentage"] * 100?>; --fill-color: <?=$eventInfo["occupancyColor"]?>">

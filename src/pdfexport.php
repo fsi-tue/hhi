@@ -21,7 +21,7 @@ class PDF extends tFPDF {
     function Header() {
         $this->SetXY($this->margins,0);
         $this->SetFont('DejaVu', 'I', 12);
-        $this->Cell(100, 10, "Schichtplan " . $this->eventInfo["eventName"], "B", 0, 'L');
+        $this->Cell(100, 10, i18n("pdf.shift_plan", ["name" => $this->eventInfo["eventName"]]), "B", 0, 'L');
         $this->SetFont('DejaVu', 'BI', 16);
         $this->SetTextColor(0, 0,0x80);
         $this->Cell(0, 10, "fsi", "B", 0, 'R');
@@ -32,7 +32,7 @@ class PDF extends tFPDF {
         $this->SetY(-10);
         $this->SetFont('DejaVu', 'I', 8);
         $this->Cell(0, 10, 
-            "Druckzeitpunkt: " . date(DATE_ATOM) . " - erstellt mit ♥ vom Helfilisten Hosting Interface", 
+            i18n("pdf.footer", ["date" => date(DATE_ATOM)]),
             0, 0, 'C');
     }
 }
@@ -44,7 +44,7 @@ function buildPdf($config, &$eventInfo) {
         $pdf->AddPage();
         $pdf->SetFont("DejaVu", "B", 24);
         $pdf->Ln(6);
-        $pdf->Cell(0, 10, "Schichtplan " . html_entity_decode($task["taskName"]), 0, 0, "C");
+        $pdf->Cell(0, 10, i18n("pdf.shift_plan", ["name" => html_entity_decode($task["taskName"])]), 0, 0, "C");
         $pdf->Ln(13);
         $pdf->SetFont("DejaVu", "I", 12);
         $pdf->MultiCell(0, 6, 
