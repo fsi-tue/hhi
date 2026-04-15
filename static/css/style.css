@@ -220,9 +220,18 @@ h2, h3, h4, h5, h6 {
 
 .progress-text {
   position: relative;
-  font-size: 10px;
+  font-size: 8px;
   font-weight: bold;
   color: var(--text);
+}
+
+/* small variant for shifts */
+.progress-ring-small {
+    --size: 24px;
+}
+
+.progress-ring-small .progress-text {
+    font-size: 5.5px;
 }
 
 

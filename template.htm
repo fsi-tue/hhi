@@ -97,9 +97,11 @@
                 <a href="javascript:shareDialog();" class="header-icon">
                     <i class="si-share"></i>
                 </a>
+                <?php if( ! $config["hidePdfExport"]) { ?>
                 <a href="?action=pdfexport" class="header-icon">
                     <i class="si-printer"></i>
                 </a>
+                <?php } ?>
                 <span class="fsi-logo">fsi</span>
             </section>
         </header>
@@ -145,7 +147,9 @@
                         <i class="icon icon-arrow-right mr-1"></i> 
                         <i class="si-pin"></i>
                         <?=$task["taskName"]?>
-                        <span class="chip chip-occupancy" style="background: <?=$task["occupancyColor"]?>"><?=$task["occupancyString"]?></span>
+                        <span class="chip chip-occupancy progress-ring" style="--progress: <?=$task["occupancyPercentage"] * 100?>; --fill-color: <?=$task["occupancyColor"]?>">
+                            <span class="progress-text"><?=$task["occupancyString"]?></span>
+                        </span>
                     </h3>
                 </label>
                 <div class="accordion-body">
@@ -161,7 +165,9 @@
                                     <i class="icon icon-time mr-1"></i>
                                     <?=$shift["shiftName"]?> 
                                     <?=isset($shift["shiftDesc"]) ? "<small class='chip bg-primary'>".$shift["shiftDesc"]."</small>" : ""?>
-                                    <span class="chip chip-occupancy" style="background: <?=$shift["occupancyColor"]?>"><?=$shift["occupancyString"]?></span>
+                                    <span class="chip chip-occupancy progress-ring progress-ring-small" style="--progress: <?=$shift["occupancyPercentage"] * 100?>; --fill-color: <?=$shift["occupancyColor"]?>">
+                                        <span class="progress-text"><?=$shift["occupancyString"]?></span>
+                                    </span>
                                 </h5>
                             </label>
                             <div class="accordion-body">

@@ -24,19 +24,21 @@ RedirectMatch 404 /*\.json
 
 
 ### Details: `config.json`
-| Key               | Description                                                                 | Required  |
-|-------------------|-----------------------------------------------------------------------------|-----------|
-| `shiftFile`       | Path to JSON with shift definitions (see next chapter)                      | yes       |
-| `adminMail`       | Mail address of the administrator who will receive the csv export           | yes       |
-| `baseUrl`         | The base URL of the service, usually ending with `index.php`                | yes       |
-| `hashSalt`        | Salt for the registration hashs                                             | yes       |
-| `enableRegister`  | Enable or disable registration function                                     | yes       |
-| `enableUnegister` | Enable or disable unregistration function                                   | yes       |
-| `mail.username`   | Username for SMTP server                                                    | yes       |
-| `mail.password`   | Password for SMTP server                                                    | yes       |
-| `mail.smtpserv`   | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes       |
-| `mail.fromaddress`| Sender's mail address                                                       | yes       |
-| `mail.fromname`   | Sender's human readable name                                                | yes       |
+| Key                | Description                                                                 | Required  |
+|--------------------|-----------------------------------------------------------------------------|-----------|
+| `shiftFile`        | Path to JSON with shift definitions (see next chapter)                      | yes       |
+| `adminMail`        | Mail address of the administrator who will receive the csv export           | yes       |
+| `baseUrl`          | The base URL of the service, usually ending with `index.php`                | yes       |
+| `hashSalt`         | Salt for the registration hashs                                             | yes       |
+| `enableRegister`   | Enable or disable registration function                                     | yes       |
+| `enableUnregister` | Enable or disable unregistration function                                   | yes       |
+| `hideNames`        | Hide registered names in shift overview                                     | yes       |
+| `hidePdfExport`    | Disable pdf export feature in UI                                            | yes       |
+| `mail.username`    | Username for SMTP server                                                    | yes       |
+| `mail.password`    | Password for SMTP server                                                    | yes       |
+| `mail.smtpserv`    | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes       |
+| `mail.fromaddress` | Sender's mail address                                                       | yes       |
+| `mail.fromname`    | Sender's human readable name                                                | yes       |
 
 *The key name in this table follows the syntax `key.subkey` => `{"key": {"subkey": value}}`*
 
@@ -56,6 +58,10 @@ Just run `make test` (because Makefiles are superior). This will host a local we
 ## Data access
 If you want to get a list of all entries with contact information, just call `<baseUrl>?action=csvexport`.
 The system will send a mail with all entries as a csv file to the configured admin mail address.
+**Attention!** From now on, the pdf plan is also attached to this mail.
+
+## Data privacy
+If you want to prevent others from seeing all entry names, you can use the two config options `hideNames` and `hidePdfExport` together. If set, all names are only visible via the export feature which sents this data to the admin mail address.
 
 ## Contribution
 If you want to contribute: Feel free! 

@@ -37,9 +37,8 @@ class PDF extends tFPDF {
     }
 }
 
-function handlePdfExport($config, &$eventInfo) {
+function buildPdf($config, &$eventInfo) {
     $pdf = new PDF($eventInfo, 'L', 'mm', 'A4');
-
     foreach ($eventInfo["eventTasks"] as $task) {
         /* page creation and title */
         $pdf->AddPage();
@@ -96,9 +95,18 @@ function handlePdfExport($config, &$eventInfo) {
             $slot++;
         }
     }
+    return $pdf;
+}
+function handlePdfExport($config, &$eventInfo) {
+    $pdf = buildPdf($config, $eventInfo);
     /* force uncached output */
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Cache-Control: post-check=0, pre-check=0", false);
     header("Pragma: no-cache");
     $pdf->Output("I");
+}
+
+function exportPdfAsString($config, &$eventInfo) {
+    $pdf = buildPdf($config, $eventInfo);
+    return $pdf->Output("S");
 }

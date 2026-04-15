@@ -87,6 +87,7 @@ switch ($action) {
         }
         break;
     case "pdfexport":
+        if($config["hidePdfExport"]) die("config option 'hidePdfExport' is set. abort.");
         handlePdfExport($config, $eventInfo);
         exit(0);
     case "csvexport":
@@ -99,6 +100,9 @@ calculcateOccupancy($eventInfo);
 
 /* add special css classes */
 appendClasses($eventInfo);
+
+/* hide names */
+if($config["hideNames"]) hideEntryNames($eventInfo);
 
 /* read authors from file */
 //$authors = implode(", ", explode("\n", file_get_contents("./AUTHORS")));
