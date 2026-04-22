@@ -7,152 +7,184 @@
   --logo: #000080;
   --logo-first: #ff0000;
   --footer: #666666;
-  --toast-btn: #5755d9;
-  --modal-background: rgba(247,248,249,.75);
+  --toast-btn: #b81313;
+  --modal-background: rgba(247, 248, 249, 0.75);
 }
 
 :root[data-theme="dark"] {
-    --bg-primary: #0e0f12;
-    --bg-secondary: #27292f;
-    --text: #e6e7ea;
-    --border: #3d4047;
-    --icon: #9aa0a6;
-    --logo: #a6b8ff;
-    --logo-first: #ff6b6b;
-    --footer: #9aa0a6;
-    --toast-btn: #8d91ff;
-    --modal-background: rgba(20,20,20,.75);
-  }
+  --bg-primary: #0e0f12;
+  --bg-secondary: #27292f;
+  --text: #e6e7ea;
+  --border: #3d4047;
+  --icon: #9aa0a6;
+  --logo: #a6b8ff;
+  --logo-first: #ff6b6b;
+  --footer: #9aa0a6;
+  --toast-btn: #8d91ff;
+  --modal-background: rgba(20, 20, 20, 0.75);
+}
 
 body {
-    margin: 0px;
-    padding: 10px;
-    background-color: var(--bg-primary);
-    color: var(--text);
+  margin: 0px;
+  padding: 10px;
+  background-color: var(--bg-primary);
+  color: var(--text);
 }
 
 header {
-    margin: -10px;
-    margin-bottom: 10px;
-    padding-left: 5px;
-    padding-right: 5px;
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border);
+  margin: -10px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
 }
 
-.table td, .table th {
-    padding: 4px !important;
+.table td,
+.table th {
+  padding: 4px !important;
 }
 
-h2, h3, h4, h5, h6 {
-    margin-bottom: 0px;
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0px;
 }
 
 .accordion-task {
-    margin-bottom: 5px;
-    background-color: var(--bg-secondary);
-    border-radius: 3px;
+  margin-bottom: 5px;
+  background-color: var(--bg-secondary);
+  border-radius: 3px;
 }
 
 .accordion-shift {
-    margin-bottom: 5px;
-    background-color: var(--bg-primary);
-    border-radius: 3px;
+  margin-bottom: 5px;
+  background-color: var(--bg-primary);
+  border-radius: 3px;
 }
 
 .accordion-body {
-    padding-left: 15px;
-    padding-right: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .event-info {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .toast-info {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .shift-desc {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .btn-register {
-    display: block;
-    margin-top: 5px;
-    margin-bottom: 5px;
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
-.header-icon, .header-icon:visited {
-    color: var(--icon);
-    font-size: 200%;
-    margin-left: 7px;
+.btn.btn-primary {
+  background: var(--toast-btn);
+  border-color: var(--toast-btn);
 }
+
+.header-icon,
+.header-icon:visited {
+  color: var(--icon);
+  font-size: 200%;
+  margin-left: 7px;
+}
+
+.logo,
+.logo:hover,
+.logo:visited {
+  font-family: "AnonymousPro", "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
+  font-size: 200%;
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+#title {
+}
+
+#logo {
+  height: 2em;
+  margin: 5px -2ex;
+}
+
 .fsi-logo {
-    font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
-    font-weight: bold;
-    font-style: oblique;
-    font-size: 200%;
-    color: var(--logo);
-    margin-left: 20px;
+  font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
+  font-weight: bold;
+  font-style: oblique;
+  font-size: 200%;
+  color: var(--logo);
+  margin-left: 20px;
 }
 
 .hhi-logo {
-    font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
-    line-height: 85%;
-    font-size: 66%;
-    font-weight: bold;
-    font-style: oblique;
-    color: var(--logo);
+  font-family: "DejaVu Sans", "Noto Sans", "Roboto", sans-serif;
+  line-height: 85%;
+  font-size: 66%;
+  font-weight: bold;
+  font-style: oblique;
+  color: var(--logo);
 }
 
 .hhi-logo:hover {
-    text-decoration: none;
-    color: var(--logo);
+  text-decoration: none;
+  color: var(--logo);
 }
 
 .hhi-logo:visited {
-    color: var(--logo);
+  color: var(--logo);
 }
 
 .hhi-logo-first {
-    color: var(--logo-first);
+  color: var(--logo-first);
 }
 
 .popover-zxnick {
-    left: 120% !important;
-    font-size: 70%;
+  left: 120% !important;
+  font-size: 70%;
 }
 
 .chip-occupancy {
-    font-size: 50%;
-    float: right;
+  font-size: 50%;
+  float: right;
 }
 
 .footer {
-    font-size: 60%;
-    margin-top: 50px;
-    color: var(--footer);
+  font-size: 60%;
+  margin-top: 50px;
+  color: var(--footer);
 }
 
 .footer-left {
-    /* noop */
+  /* noop */
 }
 
 .footer-right {
-    text-align: right;
+  text-align: right;
 }
 
 .contributor {
-    white-space: nowrap;
-    display: inline-block;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* animated accordion arrows */
 
 .accordion .accordion-header .icon-arrow-right {
-  display: inline-block;           /* nötig für transform */
-  transition: transform .2s ease;  /* smooth rotation */
+  display: inline-block; /* nötig für transform */
+  transition: transform 0.2s ease; /* smooth rotation */
 }
 
 .accordion > input:checked + .accordion-header .icon-arrow-right {
@@ -160,17 +192,17 @@ h2, h3, h4, h5, h6 {
 }
 
 .toast .btn {
-    color: var(--toast-btn);
-    text-decoration: none;
-    margin: 10px;
+  color: var(--toast-btn);
+  text-decoration: none;
+  margin: 10px;
 }
 
 .toast p {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .fs-info {
-/*
+  /*
     font-style: oblique;
     color: #000080;
 */
@@ -227,36 +259,36 @@ h2, h3, h4, h5, h6 {
 
 /* small variant for shifts */
 .progress-ring-small {
-    --size: 24px;
+  --size: 24px;
 }
 
 .progress-ring-small .progress-text {
-    font-size: 5.5px;
+  font-size: 5.5px;
 }
-
 
 /* Hacks for Spectre.css Dark Mode */
 .table.table-striped tbody tr:nth-of-type(even) {
-    background-color: var(--bg-primary);
-    border-color: var(--border);
+  background-color: var(--bg-primary);
+  border-color: var(--border);
 }
 .table.table-striped tbody tr:nth-of-type(odd) {
-    background-color: var(--bg-secondary);
-    border-color: var(--border);
+  background-color: var(--bg-secondary);
+  border-color: var(--border);
 }
 .table.table-striped tbody tr td,
 .table.table-striped thead tr th {
-    border-color: var(--border);
+  border-color: var(--border);
 }
 .modal-container {
-    background-color: var(--bg-primary);
+  background-color: var(--bg-primary);
 }
 .modal-title {
-    color: var(--text);
+  color: var(--text);
 }
 .card {
-    background-color: var(--bg-secondary);
+  background-color: var(--bg-secondary);
 }
 .modal-overlay {
-    background: var(--modal-background) !important;
+  background: var(--modal-background) !important;
 }
+

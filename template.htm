@@ -2,14 +2,14 @@
 <html>
     <head>
         <title>
-            FSI HHI
+            Tübix CfH
         </title>
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
         <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-icons/siimple-icons.css" />
         <link rel="stylesheet" href="static/css/style.css">
-        <link rel="icon" type="image/png" href="static/ico/favicon.png" />
+        <link rel="icon" type="image/png" href="https://www.tuebix.org/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="utf-8" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.css" />
@@ -81,10 +81,9 @@
     <body>
         <header class="navbar">
             <section class="navbar-section">
-                <a class="hhi-logo" href="<?=$config["baseUrl"]?>">
-                    <span class="hhi-logo-first">H</span>elfilisten<br/>
-                    <span class="hhi-logo-first">H</span>osting<br/>
-                    <span class="hhi-logo-first">I</span>nterface
+                <a class="logo" href="<?=$config["baseUrl"]?>"> 
+                  <image id="logo" src="https://www.tuebix.org/images/home-alpha-background.png"></image>
+                  Call for Helpers 
                 </a>
             </section>
             <section class="navbar-section">
@@ -102,7 +101,7 @@
                     <i class="si-printer"></i>
                 </a>
                 <?php } ?>
-                <span class="fsi-logo">fsi</span>
+                <!-- <span class="logo">Tübix</span> -->
             </section>
         </header>
         
@@ -226,29 +225,29 @@
                                         <label class="form-label" for="input-name">Dein Name:</label>
                                     </div>
                                     <div class="col-9 col-sm-12">
-                                        <input class="form-input" type="text" id="input-name" name="data-name" placeholder="fachschaft.name" minlength="3" required>
+                                        <input class="form-input" type="text" id="input-name" name="data-name" placeholder="Pingu Tux" minlength="3" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-3 col-sm-12">
                                         <div class="popover">
-                                            <label class="form-label" for="input-zxnick">Dein ZX-Kürzel: <i class="si-question-circle"></i></label>
-                                            <div class="popover-container popover-zxnick">
-                                                <div class="card">
-                                                    <div class="card-header text-tiny">
-                                                        <b>Wofür benötigen wir Dein ZX-Kürzel?</b>
-                                                    </div>
-                                                    <div class="card-body text-tiny">
-                                                        Wir benötigen Dein ZX-Kürzel lediglich, um Dir eine Mail an Deine studentische
-                                                        Mailadresse zu senden. Nach der Veranstaltung wird das ZX-Kürzel natürlich sofort
-                                                        wieder gelöscht und von uns nicht anderweitig benutzt. 
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <label class="form-label" for="input-zxnick">Deine Mail:</label>
+                                            <!-- <div class="popover-container popover-zxnick"> -->
+                                            <!--     <div class="card"> -->
+                                            <!--         <div class="card-header text-tiny"> -->
+                                            <!--             <b>Wofür benötigen wir Dein ZX-Kürzel?</b> -->
+                                            <!--         </div> -->
+                                            <!--         <div class="card-body text-tiny"> -->
+                                            <!--             Wir benötigen Dein ZX-Kürzel lediglich, um Dir eine Mail an Deine studentische -->
+                                            <!--             Mailadresse zu senden. Nach der Veranstaltung wird das ZX-Kürzel natürlich sofort -->
+                                            <!--             wieder gelöscht und von uns nicht anderweitig benutzt.  -->
+                                            <!--         </div> -->
+                                            <!--     </div> -->
+                                            <!-- </div> -->
                                         </div>
                                     </div>
                                     <div class="col-9 col-sm-12">
-                                        <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="zxabc12" pattern="^(?:zx|ii)\w{3}\d{2}$|^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
+                                        <input class="form-input" type="text" id="input-zxnick" name="data-zxnick" placeholder="pingu@tuebix.org" pattern="^(?:zx|ii)\w{3}\d{2}$|^[^\s@]+@[^\s@]+\.[^\s@]+$" required>
                                     </div>
                                 </div>
                             </div>
@@ -274,6 +273,9 @@
 
         <footer class="navbar footer">
             <section class="navbar-section footer-left">
+                Built by the
+                <a href="https://www.fsi.uni-tuebingen.de">FSI</a>
+                with
                 <a href="https://github.com/fsi-tue/hhi">Source Code on GitHub</a>
             </section>
             <section class="navbar-section">
