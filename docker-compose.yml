@@ -1,0 +1,8 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config.json:/var/www/html/config.json
+      - ./shifts.json:/var/www/html/shifts.json

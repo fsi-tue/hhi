@@ -12,6 +12,7 @@
     "baseUrl": "http://localhost:8080/index.php",
     "hashSalt": "muchmoresecret",
     "enableRegister": true,
-    "enableUnregister": true
+    "enableUnregister": true,
+    "hideNames": false,
+    "hidePdfExport": false
 }
-

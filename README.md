@@ -23,32 +23,25 @@ cp sample-shifts.json shifts.json
 > [!CAUTION] Please make sure no one can access these config files via HTTP (=>
 > .htaccess)!
 
-Sample `.htaccess` file:
-
-```
-RedirectMatch 404 /\.git
-RedirectMatch 404 /*\.json
-```
+For this purpose the project includes a sample `.htaccess` file.
 
 ### Details: `config.json`
 
-| Key                   | Description                                                                 | Required |
-| --------------------- | --------------------------------------------------------------------------- | -------- |
-| `shiftFile`           | Path to JSON with shift definitions (see next chapter)                      | yes      |
-| `adminMail`           | Mail address of the administrator who will receive the csv export           | yes      |
-| `baseUrl`             | The base URL of the service, usually ending with `index.php`                | yes      |
-| `hashSalt`            | Salt for the registration hashs                                             | yes      |
-| `enableRegister`      | Enable or disable registration function                                     | yes      |
-| `enableUnregister`    | Enable or disable unregistration function                                   | yes      |
-| `hideNames`           | Hide registered names in shift overview                                     | yes      |
-| `hidePdfExport`       | Disable pdf export feature in UI                                            | yes      |
-| `mail.username`       | Username for SMTP server                                                    | yes      |
-| `mail.password`       | Password for SMTP server                                                    | yes      |
-| `mail.smtpserv`       | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes      |
-| `mail.fromaddress`    | Sender's mail address                                                       | yes      |
-| `mail.fromname`       | Sender's human readable name                                                | yes      |
-| `mail.replyToAddress` | ReplyTo's mail address                                                      | yes      |
-| `mail.replyToName`    | ReplyTo's human readable name                                               | yes      |
+| Key                | Description                                                                 | Required |
+| ------------------ | --------------------------------------------------------------------------- | -------- |
+| `shiftFile`        | Path to JSON with shift definitions (see next chapter)                      | yes      |
+| `adminMail`        | Mail address of the administrator who will receive the csv export           | yes      |
+| `baseUrl`          | The base URL of the service, usually ending with `index.php`                | yes      |
+| `hashSalt`         | Salt for the registration hashs                                             | yes      |
+| `enableRegister`   | Enable or disable registration function                                     | yes      |
+| `enableUnregister` | Enable or disable unregistration function                                   | yes      |
+| `hideNames`        | Hide registered names in shift overview                                     | yes      |
+| `hidePdfExport`    | Disable pdf export feature in UI                                            | yes      |
+| `mail.username`    | Username for SMTP server                                                    | yes      |
+| `mail.password`    | Password for SMTP server                                                    | yes      |
+| `mail.smtpserv`    | Address of SMTP server (notice: we always connect via STARTTLS on port 587) | yes      |
+| `mail.fromaddress` | Sender's mail address                                                       | yes      |
+| `mail.fromname`    | Sender's human readable name                                                | yes      |
 
 *The key name in this table follows the syntax `key.subkey` =>
 `{"key": {"subkey": value}}`*
@@ -70,6 +63,16 @@ For an example, have a look at `sample-shifts.json`.
 Just run `make test` (because Makefiles are superior). This will host a local
 webserver which listens on `0.0.0.0:8080` for testing purposes.
 
+## Deploy this project
+
+We provide both a `Dockerfile` and a docker compose file. Run
+
+```
+docker compose up --build
+```
+
+Or run `make docker`
+
 ## Data access
 
 If you want to get a list of all entries with contact information, just call
@@ -89,4 +92,3 @@ address.
 If you want to contribute: Feel free! There is a file called `AUTHORS` in the
 repository root. If you want your name to be displayed within the website, you
 can just add a line with your name there.
-

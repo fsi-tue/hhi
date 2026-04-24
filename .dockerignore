@@ -1,0 +1,9 @@
+.git/
+.gitignore
+assets/
+*.md
+*.json
+Makefile
+LICENSE
+Dockerfile
+*.yml
