@@ -59,7 +59,7 @@ function handleRegister(array $postData, array $config, array &$eventInfo): int 
             /* smtp mail settings */
             $mail->setFrom($config["mail"]["fromaddress"], $config["mail"]["fromname"]);
             $mail->addAddress($entry["entryMail"], $entry["entryName"]);
-            $mail->addReplyTo('fsi@fsi.uni-tuebingen.de', 'FSI');
+            $mail->addReplyTo($config["mail"]["replyToAddress"], $config["mail"]["replyToName"]);
             $mail->CharSet = "UTF-8";
             /* content */
             $mail->isHTML(false);

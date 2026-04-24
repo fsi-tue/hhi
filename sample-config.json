@@ -4,7 +4,9 @@
         "password": "supersecret",
         "smtpserv": "smtpserv.uni-tuebingen.de",
         "fromaddress": "hhi@fsi.uni-tuebingen.de",
-        "fromname": "FSI HHI"
+        "fromname": "FSI HHI",
+        "replyToAddress": "fsi@fsi.uni-tuebingen.de",
+        "replyToName": "FSI"
     },
     "shiftFile": "./shifts.json",
     "baseUrl": "http://localhost:8080/index.php",
@@ -12,3 +14,4 @@
     "enableRegister": true,
     "enableUnregister": true
 }
+
