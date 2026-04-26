@@ -15,6 +15,12 @@ function i18n_set_locale(string $locale = I18N_DEFAULT_LOCALE): void {
     $i18nMessages = array_replace($defaultMessages, $localeMessages);
 }
 
+function i18n_get_locale(): string {
+    global $i18nLocale;
+
+    return $i18nLocale;
+}
+
 function i18n_load_file(string $locale): array {
     $path = dirname(__DIR__) . "/i18n/{$locale}.json";
     if( ! is_readable($path)) {

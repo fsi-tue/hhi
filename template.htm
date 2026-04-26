@@ -107,6 +107,17 @@
         </header>
         
         <div class="text-center event-info">
+            <div class="language-chooser" aria-label="<?=htmlspecialchars(i18n("language.chooser_label"))?>">
+                <?php foreach($languageUrls as $locale => $url) { ?>
+                <a class="language-option <?=i18n_get_locale() === $locale ? "active" : ""?>"
+                    href="<?=htmlspecialchars($url)?>"
+                    title="<?=htmlspecialchars(i18n("language.{$locale}.label"))?>"
+                    aria-label="<?=htmlspecialchars(i18n("language.{$locale}.label"))?>"
+                    <?=i18n_get_locale() === $locale ? "aria-current='true'" : ""?>>
+                    <?=i18n("language.{$locale}.flag")?>
+                </a>
+                <?php } ?>
+            </div>
             <h1>
                 <?=$eventInfo["eventName"]?>
             </h1>

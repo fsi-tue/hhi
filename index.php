@@ -14,7 +14,20 @@ require 'src/csvexport.php';
 
 /* config values */
 $config = json_decode(file_get_contents("./config.json"), true);
-i18n_set_locale($config["language"] ?? I18N_DEFAULT_LOCALE);
+$supportedLocales = ["de", "en"];
+$locale = $_GET["lang"] ?? $_COOKIE["language"] ?? $config["language"] ?? I18N_DEFAULT_LOCALE;
+if( ! in_array($locale, $supportedLocales, true)) {
+    $locale = I18N_DEFAULT_LOCALE;
+}
+if(isset($_GET["lang"])) {
+    setcookie("language", $locale, time() + 60 * 60 * 24 * 365, "/", "", false, true);
+}
+i18n_set_locale($locale);
+$languageUrls = [];
+foreach($supportedLocales as $supportedLocale) {
+    $query = array_merge($_GET, ["lang" => $supportedLocale]);
+    $languageUrls[$supportedLocale] = "?" . http_build_query($query);
+}
 
 /* main event data */
 $eventInfo = json_decode(file_get_contents($config["shiftFile"]), true);

@@ -70,6 +70,30 @@ h2, h3, h4, h5, h6 {
     margin-bottom: 25px;
 }
 
+.language-chooser {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.language-option,
+.language-option:visited {
+    border-radius: 8px;
+    color: inherit;
+    font-size: 1.1rem;
+    opacity: 0.45;
+    padding: 2px 4px;
+    text-decoration: none;
+}
+
+.language-option:hover,
+.language-option.active {
+    opacity: 1;
+    text-decoration: none;
+}
+
 .toast-info {
     margin-bottom: 25px;
 }
